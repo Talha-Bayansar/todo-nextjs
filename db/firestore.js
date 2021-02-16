@@ -1,21 +1,13 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 
-// const firebaseConfig = {
-//     apiKey: process.env.NEXT_API_KEY,
-//     authDomain: process.env.NEXT_AUTH_DOMAIN,
-//     projectId: process.env.NEXT_PROJECT_ID,
-//     storageBucket: process.env.NEXT_STORAGE_BUCKET,
-//     messagingSenderId: process.env.NEXT_MESSAGING_SENDER_ID,
-//     appId: process.env.NEXT_APP_ID,
-// };
 const firebaseConfig = {
-    apiKey: "AIzaSyCLgO7GFY2MnxKwpgdJJFAHHjW_nAuQA78",
-    authDomain: "todo-9b159.firebaseapp.com",
-    projectId: "todo-9b159",
-    storageBucket: "todo-9b159.appspot.com",
-    messagingSenderId: "154421333172",
-    appId: "1:154421333172:web:c19eec4d670cb583499be1",
+    apiKey: process.env.NEXT_PUBLIC_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
 export default function firebaseInit() {

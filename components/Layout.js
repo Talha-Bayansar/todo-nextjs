@@ -13,12 +13,12 @@ export const Layout = ({ children }) => {
                 <h1 className="text-3xl font-bold hidden sm:block">Logo</h1>
                 <div className="flex justify-evenly w-full sm:w-auto">
                     <Link href="/">
-                        <a className="hover:bg-gray-300 active:bg-gray-300 px-4 py-2 rounded-lg m-2">
+                        <a className="hover:bg-gray-300 active:bg-gray-300 px-4 py-2 rounded-lg">
                             Startpagina
                         </a>
                     </Link>
                     <Link href="/tasks">
-                        <a className="hover:bg-gray-300 active:bg-gray-300 px-4 py-2 rounded-lg m-2">
+                        <a className="hover:bg-gray-300 active:bg-gray-300 px-4 py-2 rounded-lg">
                             Taken
                         </a>
                     </Link>

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { CreateTask } from "../../components/CreateTask";
 import { TaskCard } from "../../components/TaskCard";
 import firebaseInit from "../../db/firestore";
+import AddIcon from "@material-ui/icons/Add";
+import { Add } from "@material-ui/icons";
 
 const Tasks = ({ tasks }) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -31,10 +33,9 @@ const Tasks = ({ tasks }) => {
                 onClick={() => {
                     setIsVisible(true);
                 }}
-                className="focus:outline-none outline-none fixed top-28 right-4 bg-white text-blue-500 border-2
-             border-gray-300 rounded-md px-2 py-1 hover:border-blue-500"
+                className="focus:outline-none outline-none fixed bottom-28 right-4 text-white rounded-full bg-blue-500 p-2 shadow-mat hover:bg-blue-400 active:bg-blue-400"
             >
-                + Add
+                <Add />
             </button>
             <div className="flex flex-wrap justify-center mt-20">
                 {allTasks === undefined

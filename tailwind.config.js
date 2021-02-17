@@ -5,7 +5,15 @@ module.exports = {
     ],
     darkMode: false, // or 'media' or 'class'
     theme: {
-        extend: {},
+        extend: {
+            keyframes: {
+                grow: {
+                    "0%": { transform: "scale(0)" },
+                    "100%": { transform: "scale(1)" },
+                },
+            },
+            animation: { grow: "grow 0.25s ease-in-out" },
+        },
         boxShadow: {
             sm: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
             DEFAULT:

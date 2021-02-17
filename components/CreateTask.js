@@ -28,7 +28,7 @@ export const CreateTask = ({ setIsVisible }) => {
             <form
                 autoComplete="off"
                 onSubmit={(e) => e.preventDefault()}
-                className="absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
+                className="animate-grow absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
             >
                 <div className="flex flex-col m-4">
                     <label htmlFor="title">Titel</label>

@@ -12,6 +12,7 @@ export const CreateTask = ({ setIsVisible }) => {
                 title: title,
                 description: description,
                 date: new Date(),
+                checked: false,
             });
             setTitle("");
             setDescription("");
@@ -25,13 +26,14 @@ export const CreateTask = ({ setIsVisible }) => {
                 className="w-full h-full bg-black opacity-50"
             />
             <form
+                autoComplete="off"
                 onSubmit={(e) => e.preventDefault()}
-                className="absolute flex flex-col bg-gray-200 p-4 rounded-md"
+                className="absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
             >
                 <div className="flex flex-col m-4">
                     <label htmlFor="title">Titel</label>
                     <input
-                        className="rounded-md p-2"
+                        className="focus:outline-none rounded-md p-2 shadow-md"
                         type="text"
                         name="title"
                         onChange={(e) => setTitle(e.target.value)}
@@ -41,7 +43,7 @@ export const CreateTask = ({ setIsVisible }) => {
                 <div className="flex flex-col m-4">
                     <label htmlFor="description">Beschrijving</label>
                     <textarea
-                        className="rounded-md p-2"
+                        className="focus:outline-none rounded-md p-2 shadow-md"
                         type="text"
                         name="description"
                         onChange={(e) => setDescription(e.target.value)}
@@ -50,7 +52,7 @@ export const CreateTask = ({ setIsVisible }) => {
                 </div>
                 <button
                     onClick={handleSubmit}
-                    className="focus:outline-none outline-none m-4 bg-white rounded-md py-2 hover:bg-green-300 transition-colors"
+                    className="focus:outline-none shadow-mat outline-none m-4 bg-white rounded-md py-2 hover:bg-green-300 transition-colors"
                 >
                     Taak aanmaken
                 </button>

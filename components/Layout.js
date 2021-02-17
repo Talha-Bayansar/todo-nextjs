@@ -22,9 +22,6 @@ export const Layout = ({ children }) => {
                 </div>
             </nav>
             <div className="mt-16 w-full p-8">{children}</div>
-            <footer className="flex flex-col items-center py-4 w-full bg-gray-200">
-                Footer
-            </footer>
         </div>
     );
 };

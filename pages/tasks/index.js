@@ -6,12 +6,13 @@ import firebaseInit from "../../db/firestore";
 
 const Tasks = ({ tasks }) => {
     const [isVisible, setIsVisible] = useState(false);
-    const [allTasks, setAllTasks] = useState([]);
+    const [allTasks, setAllTasks] = useState();
     useEffect(async () => {
         const firebase = await firebaseInit();
         firebase
             .firestore()
             .collection("tasks")
+            .orderBy("date")
             .onSnapshot((snap) => {
                 const tasks = snap.docs.map((doc) => ({
                     id: doc.id,
@@ -36,7 +37,7 @@ const Tasks = ({ tasks }) => {
                 + Add
             </button>
             <div className="flex flex-wrap justify-center mt-20">
-                {allTasks.length === 0
+                {allTasks === undefined
                     ? tasks.map((task) => (
                           <TaskCard key={task.id} task={task} />
                       ))
@@ -54,6 +55,7 @@ Tasks.getInitialProps = async () => {
     const tasks = await firebase
         .firestore()
         .collection("tasks")
+        .orderBy("date")
         .get()
         .then((qs) => {
             console.log(qs);

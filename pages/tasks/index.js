@@ -3,11 +3,15 @@ import React, { useEffect, useState } from "react";
 import { CreateTask } from "../../components/CreateTask";
 import { TaskCard } from "../../components/TaskCard";
 import firebaseInit from "../../db/firestore";
-import AddIcon from "@material-ui/icons/Add";
 import { Add } from "@material-ui/icons";
+import { EditTask } from "../../components/EditTask";
 
 const Tasks = ({ tasks }) => {
     const [isVisible, setIsVisible] = useState(false);
+    const [taskId, setTaskId] = useState(null);
+    const [edit, setEdit] = useState(false);
+    const [title, setTitle] = useState(null);
+    const [description, setDescription] = useState(null);
     const [allTasks, setAllTasks] = useState();
     useEffect(async () => {
         const firebase = await firebaseInit();
@@ -40,13 +44,38 @@ const Tasks = ({ tasks }) => {
             <div className="flex flex-wrap justify-center mt-20">
                 {allTasks === undefined
                     ? tasks.map((task) => (
-                          <TaskCard key={task.id} task={task} />
+                          <TaskCard
+                              key={task.id}
+                              task={task}
+                              setEdit={setEdit}
+                              setTitle={setTitle}
+                              setDescription={setDescription}
+                              setTaskId={setTaskId}
+                          />
                       ))
                     : allTasks.map((task) => (
-                          <TaskCard key={task.id} task={task} />
+                          <TaskCard
+                              key={task.id}
+                              task={task}
+                              setEdit={setEdit}
+                              setTitle={setTitle}
+                              setDescription={setDescription}
+                              setTaskId={setTaskId}
+                          />
                       ))}
             </div>
             {isVisible && <CreateTask setIsVisible={setIsVisible} />}
+            {edit && (
+                <EditTask
+                    setEdit={setEdit}
+                    title={title}
+                    setTitle={setTitle}
+                    description={description}
+                    setDescription={setDescription}
+                    taskId={taskId}
+                    setTaskId={setTaskId}
+                />
+            )}
         </div>
     );
 };

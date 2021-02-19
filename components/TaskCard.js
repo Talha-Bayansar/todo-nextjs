@@ -2,8 +2,15 @@ import React, { useEffect, useState } from "react";
 import firebaseInit from "../db/firestore";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CheckIcon from "@material-ui/icons/Check";
+import EditIcon from "@material-ui/icons/Edit";
 
-export const TaskCard = ({ task }) => {
+export const TaskCard = ({
+    task,
+    setEdit,
+    setTitle,
+    setDescription,
+    setTaskId,
+}) => {
     const [checked, setChecked] = useState(task.checked);
     const date = new Date(task.date.seconds * 1000).toString().slice(0, 16);
     const handleDelete = async () => {
@@ -29,10 +36,18 @@ export const TaskCard = ({ task }) => {
                 checked && "opacity-50"
             }`}
         >
-            <h1 className={`text-2xl ${checked && "line-through"}`}>
+            <h1
+                onChange={(e) => {
+                    setTitle(e.target.value);
+                }}
+                className={`text-2xl ${checked && "line-through"}`}
+            >
                 {task.title}
             </h1>
-            <p className={`mt-6 ${checked && "line-through"}`}>
+            <p
+                onChange={(e) => setDescription(e.target.value)}
+                className={`mt-6 ${checked && "line-through"}`}
+            >
                 {task.description}
             </p>
             <div className="flex w-full items-center mt-6 justify-between">
@@ -43,6 +58,17 @@ export const TaskCard = ({ task }) => {
                         className="focus:outline-none mx-1 outline-none block rounded-full bg-blue-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
                     >
                         <CheckIcon />
+                    </button>
+                    <button
+                        onClick={() => {
+                            setTitle(task.title);
+                            setDescription(task.description);
+                            setTaskId(task.id);
+                            setEdit(true);
+                        }}
+                        className="focus:outline-none mx-1 outline-none block rounded-full bg-yellow-600 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
+                    >
+                        <EditIcon />
                     </button>
                     <button
                         onClick={handleDelete}

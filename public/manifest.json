@@ -1,5 +1,25 @@
 {
     "display": "standalone",
     "short_name": "Todo",
-    "theme_color": "rgba(229, 231, 235)"
+    "theme_color": "rgba(229, 231, 235)",
+    "icons": [
+        {
+            "src": "public/icons/manifest-icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable any"
+          },
+          {
+            "src": "public/icons/manifest-icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable any"
+          }
+    ],
+    "gcm_sender_id": "",
+    "gcm_user_visible_only": true,
+    "start_url": "/?utm_source=homescreen",
+    "permissions": [
+        "gcm"
+    ]
 }

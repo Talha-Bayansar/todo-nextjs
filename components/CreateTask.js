@@ -4,18 +4,38 @@ import firebaseInit from "../db/firestore";
 export const CreateTask = ({ setIsVisible }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const now = new Date();
+    const [date, setDate] = useState(
+        `${now.getFullYear()}-${(now.getMonth() + 1)
+            .toString()
+            .padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}`
+    );
+    const [time, setTime] = useState(
+        `${now
+            .getHours()
+            .toString()
+            .padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`
+    );
     const handleSubmit = async () => {
         console.log("created");
+        console.log(date);
+        console.log(time);
+        console.log();
         if (title !== "" && description !== "") {
             const firebase = await firebaseInit();
-            await firebase.firestore().collection("tasks").add({
-                title: title,
-                description: description,
-                date: new Date(),
-                checked: false,
-            });
+            await firebase
+                .firestore()
+                .collection("tasks")
+                .add({
+                    title: title,
+                    description: description,
+                    date: new Date(date + " " + time),
+                    checked: false,
+                });
             setTitle("");
             setDescription("");
+            setDate("");
+            setTime("");
             setIsVisible(false);
         }
     };
@@ -48,6 +68,26 @@ export const CreateTask = ({ setIsVisible }) => {
                         name="description"
                         onChange={(e) => setDescription(e.target.value)}
                         value={description}
+                    />
+                </div>
+                <div className="flex flex-col m-4">
+                    <label htmlFor="date">Datum</label>
+                    <input
+                        className="focus:outline-none rounded-md p-2 shadow-md"
+                        type="date"
+                        name="date"
+                        onChange={(e) => setDate(e.target.value)}
+                        value={date}
+                    />
+                </div>
+                <div className="flex flex-col m-4">
+                    <label htmlFor="time">Tijdstip</label>
+                    <input
+                        className="focus:outline-none rounded-md p-2 shadow-md"
+                        type="time"
+                        name="time"
+                        onChange={(e) => setTime(e.target.value)}
+                        value={time}
                     />
                 </div>
                 <button

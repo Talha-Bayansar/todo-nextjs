@@ -9,18 +9,26 @@ export const EditTask = ({
     setDescription,
     taskId,
     setTaskId,
+    time,
+    setTime,
+    date,
+    setDate,
 }) => {
     const handleSubmit = async () => {
         console.log("edited");
         if (title !== "" && description !== "") {
             const firebase = await firebaseInit();
-            await firebase.firestore().collection("tasks").doc(taskId).update({
-                title: title,
-                description: description,
-                date: new Date(),
-            });
-            setTitle(null);
-            setDescription(null);
+            await firebase
+                .firestore()
+                .collection("tasks")
+                .doc(taskId)
+                .update({
+                    title: title,
+                    description: description,
+                    date: new Date(date + " " + time),
+                });
+            setTitle("");
+            setDescription("");
             setTaskId(null);
             setEdit(false);
         }
@@ -54,6 +62,26 @@ export const EditTask = ({
                         name="description"
                         onChange={(e) => setDescription(e.target.value)}
                         value={description}
+                    />
+                </div>
+                <div className="flex flex-col m-4">
+                    <label htmlFor="date">Datum</label>
+                    <input
+                        className="focus:outline-none rounded-md p-2 shadow-md"
+                        type="date"
+                        name="date"
+                        onChange={(e) => setDate(e.target.value)}
+                        value={date}
+                    />
+                </div>
+                <div className="flex flex-col m-4">
+                    <label htmlFor="time">Tijdstip</label>
+                    <input
+                        className="focus:outline-none rounded-md p-2 shadow-md"
+                        type="time"
+                        name="time"
+                        onChange={(e) => setTime(e.target.value)}
+                        value={time}
                     />
                 </div>
                 <button

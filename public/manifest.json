@@ -2,7 +2,7 @@
     "display": "standalone",
     "name": "Planner",
     "short_name": "Planner",
-    "theme_color": "blue",
+    "theme_color": "white",
     "background_color": "white",
     "icons": [
       {

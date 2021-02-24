@@ -10,9 +10,28 @@ export const TaskCard = ({
     setTitle,
     setDescription,
     setTaskId,
+    setDate,
+    setTime,
 }) => {
     const [checked, setChecked] = useState(task.checked);
-    const date = new Date(task.date.seconds * 1000).toString().slice(0, 16);
+    // const date = new Date(task.date.seconds * 1000).toString().slice(0, 16);
+    const currentDate = new Date(task.date.seconds * 1000);
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    const time = `${currentDate
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${currentDate
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
+    const date2 = `${day
+        .toString()
+        .padStart(2, "0")}-${month
+        .toString()
+        .padStart(2, "0")}-${year} -> ${time}`;
+
     const handleDelete = async () => {
         const firebase = await firebaseInit();
         await firebase.firestore().collection("tasks").doc(task.id).delete();
@@ -32,51 +51,65 @@ export const TaskCard = ({
     }, [checked]);
     return (
         <div
-            className={`rounded-xl bg-gray-100 m-6 max-w-sm p-4 shadow-mat ${
+            className={`flex rounded-xl bg-gray-100 m-2 md:m-6 max-w-sm p-4 shadow-mat ${
                 checked && "opacity-50"
             }`}
         >
-            <h1
-                onChange={(e) => {
-                    setTitle(e.target.value);
-                }}
-                className={`text-2xl ${checked && "line-through"}`}
-            >
-                {task.title}
-            </h1>
-            <p
-                onChange={(e) => setDescription(e.target.value)}
-                className={`mt-6 ${checked && "line-through"}`}
-            >
-                {task.description}
-            </p>
-            <div className="flex w-full items-center mt-6 justify-between">
-                <span className="block text-gray-500 mr-8">{date}</span>
-                <div className="flex">
-                    <button
-                        onClick={() => setChecked(!checked)}
-                        className="focus:outline-none mx-1 outline-none block rounded-full bg-blue-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
-                    >
-                        <CheckIcon />
-                    </button>
-                    <button
-                        onClick={() => {
-                            setTitle(task.title);
-                            setDescription(task.description);
-                            setTaskId(task.id);
-                            setEdit(true);
-                        }}
-                        className="focus:outline-none mx-1 outline-none block rounded-full bg-yellow-600 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
-                    >
-                        <EditIcon />
-                    </button>
-                    <button
-                        onClick={handleDelete}
-                        className="focus:outline-none mx-1 outline-none block rounded-full bg-red-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
-                    >
-                        <DeleteIcon />
-                    </button>
-                </div>
+            <div className="flex flex-col justify-between flex-grow">
+                <h1
+                    onChange={(e) => {
+                        setTitle(e.target.value);
+                    }}
+                    className={`text-2xl ${checked && "line-through"}`}
+                >
+                    {task.title}
+                </h1>
+                <p
+                    onChange={(e) => setDescription(e.target.value)}
+                    className={`${
+                        checked && "line-through"
+                    } whitespace-pre-line`}
+                >
+                    {task.description}
+                </p>
+                <span className="block text-gray-500">{date2}</span>
+            </div>
+
+            <div className="flex flex-col w-min items-center ml-4 justify-between">
+                <button
+                    onClick={() => setChecked(!checked)}
+                    className="focus:outline-none my-1 outline-none block rounded-full bg-blue-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
+                >
+                    <CheckIcon />
+                </button>
+                <button
+                    onClick={() => {
+                        console.log(`${day}-${month}-${year}`);
+                        setTitle(task.title);
+                        setDescription(task.description);
+                        setTaskId(task.id);
+                        setEdit(true);
+                        setDate(
+                            `${year
+                                .toString()
+                                .padStart(2, "0")}-${month
+                                .toString()
+                                .padStart(2, "0")}-${day
+                                .toString()
+                                .padStart(2, "0")}`
+                        );
+                        setTime(time);
+                    }}
+                    className="focus:outline-none my-1 outline-none block rounded-full bg-yellow-600 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
+                >
+                    <EditIcon />
+                </button>
+                <button
+                    onClick={handleDelete}
+                    className="focus:outline-none my-1 outline-none block rounded-full bg-red-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
+                >
+                    <DeleteIcon />
+                </button>
             </div>
         </div>
     );

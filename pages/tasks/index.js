@@ -10,8 +10,10 @@ const Tasks = ({ tasks }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [taskId, setTaskId] = useState(null);
     const [edit, setEdit] = useState(false);
-    const [title, setTitle] = useState(null);
-    const [description, setDescription] = useState(null);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [date, setDate] = useState("");
+    const [time, setTime] = useState("");
     const [allTasks, setAllTasks] = useState();
     useEffect(async () => {
         const firebase = await firebaseInit();
@@ -51,6 +53,8 @@ const Tasks = ({ tasks }) => {
                               setTitle={setTitle}
                               setDescription={setDescription}
                               setTaskId={setTaskId}
+                              setDate={setDate}
+                              setTime={setTime}
                           />
                       ))
                     : allTasks.map((task) => (
@@ -61,6 +65,8 @@ const Tasks = ({ tasks }) => {
                               setTitle={setTitle}
                               setDescription={setDescription}
                               setTaskId={setTaskId}
+                              setDate={setDate}
+                              setTime={setTime}
                           />
                       ))}
             </div>
@@ -74,6 +80,10 @@ const Tasks = ({ tasks }) => {
                     setDescription={setDescription}
                     taskId={taskId}
                     setTaskId={setTaskId}
+                    date={date}
+                    setDate={setDate}
+                    time={time}
+                    setTime={setTime}
                 />
             )}
         </div>

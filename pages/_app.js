@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
                 <title>Page Title</title>
 
                 {/* <!-- Android  --> */}
-                <meta name="theme-color" content="red" />
+                <meta name="theme-color" content="white" />
                 <meta name="mobile-web-app-capable" content="yes" />
 
                 {/* <!-- iOS --> */}
@@ -33,8 +33,8 @@ function MyApp({ Component, pageProps }) {
                 />
 
                 {/* <!-- Windows  --> */}
-                <meta name="msapplication-navbutton-color" content="red" />
-                <meta name="msapplication-TileColor" content="red" />
+                <meta name="msapplication-navbutton-color" content="#e5e7eb" />
+                <meta name="msapplication-TileColor" content="white" />
                 <meta name="msapplication-config" content="browserconfig.xml" />
 
                 {/* <!-- Pinned Sites  --> */}

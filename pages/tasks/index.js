@@ -43,7 +43,7 @@ const Tasks = ({ tasks }) => {
             >
                 <Add />
             </button>
-            <div className="flex flex-wrap justify-center mt-20">
+            <div className="flex flex-wrap justify-center mt-10">
                 {allTasks === undefined
                     ? tasks.map((task) => (
                           <TaskCard

@@ -44,7 +44,7 @@ export const EditTask = ({
                 onSubmit={(e) => e.preventDefault()}
                 className="animate-grow absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
             >
-                <div className="flex flex-col m-4">
+                <div className="flex flex-col my-2">
                     <label htmlFor="title">Titel</label>
                     <input
                         className="focus:outline-none rounded-md p-2 shadow-md"
@@ -54,41 +54,44 @@ export const EditTask = ({
                         value={title}
                     />
                 </div>
-                <div className="flex flex-col m-4">
+                <div className="flex flex-col my-2">
                     <label htmlFor="description">Beschrijving</label>
                     <textarea
-                        className="focus:outline-none rounded-md p-2 shadow-md"
+                        className="focus:outline-none h-24 rounded-md p-2 shadow-md"
                         type="text"
                         name="description"
                         onChange={(e) => setDescription(e.target.value)}
                         value={description}
                     />
                 </div>
-                <div className="flex flex-col m-4">
-                    <label htmlFor="date">Datum</label>
-                    <input
-                        className="focus:outline-none rounded-md p-2 shadow-md"
-                        type="date"
-                        name="date"
-                        onChange={(e) => setDate(e.target.value)}
-                        value={date}
-                    />
+                <div className="flex justify-between my-2">
+                    <div className="flex flex-col mr-1">
+                        <label htmlFor="date">Datum</label>
+                        <input
+                            className="focus:outline-none rounded-md p-2 shadow-md w-min"
+                            type="date"
+                            name="date"
+                            onChange={(e) => setDate(e.target.value)}
+                            value={date}
+                        />
+                    </div>
+                    <div className="flex flex-col ml-1">
+                        <label htmlFor="time">Tijdstip</label>
+                        <input
+                            className="focus:outline-none rounded-md p-2 shadow-md w-min"
+                            type="time"
+                            name="time"
+                            onChange={(e) => setTime(e.target.value)}
+                            value={time}
+                        />
+                    </div>
                 </div>
-                <div className="flex flex-col m-4">
-                    <label htmlFor="time">Tijdstip</label>
-                    <input
-                        className="focus:outline-none rounded-md p-2 shadow-md"
-                        type="time"
-                        name="time"
-                        onChange={(e) => setTime(e.target.value)}
-                        value={time}
-                    />
-                </div>
+
                 <button
                     onClick={handleSubmit}
-                    className="focus:outline-none shadow-mat outline-none m-4 bg-white rounded-md py-2 hover:bg-green-300 transition-colors"
+                    className="focus:outline-none shadow-mat outline-none my-2 bg-white rounded-md py-2 hover:bg-green-300 transition-colors"
                 >
-                    Taak bewerken
+                    Taak aanmaken
                 </button>
             </form>
         </div>

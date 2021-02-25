@@ -51,7 +51,7 @@ export const TaskCard = ({
     }, [checked]);
     return (
         <div
-            className={`flex rounded-xl bg-gray-100 m-2 md:m-6 max-w-sm p-4 shadow-mat ${
+            className={`flex rounded-xl bg-gray-100 my-4 md:m-6 max-w-sm p-4 shadow-mat ${
                 checked && "opacity-50"
             }`}
         >
@@ -68,14 +68,14 @@ export const TaskCard = ({
                     onChange={(e) => setDescription(e.target.value)}
                     className={`${
                         checked && "line-through"
-                    } whitespace-pre-line`}
+                    } whitespace-pre-line my-3`}
                 >
                     {task.description}
                 </p>
                 <span className="block text-gray-500">{date2}</span>
             </div>
 
-            <div className="flex flex-col w-min items-center ml-4 justify-between">
+            <div className="flex flex-col w-min ml-4 justify-start">
                 <button
                     onClick={() => setChecked(!checked)}
                     className="focus:outline-none my-1 outline-none block rounded-full bg-blue-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"

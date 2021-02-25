@@ -34,7 +34,7 @@ const Tasks = ({ tasks }) => {
             <Head>
                 <title>Taken</title>
             </Head>
-            <h1 className="relative text-5xl">Tasks</h1>
+            <h1 className="relative text-5xl">Taken</h1>
             <button
                 onClick={() => {
                     setIsVisible(true);

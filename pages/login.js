@@ -11,7 +11,7 @@ const Login = () => {
         auth.login(email, password);
     };
     return (
-        <div className="flex items-center justify-center w-screen h-screen">
+        <div className="flex items-center justify-center w-full mt-20">
             <form onSubmit={handleSubmit} className="flex flex-col w-min">
                 <div className="flex flex-col my-2">
                     <label htmlFor="email">Email</label>

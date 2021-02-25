@@ -1,15 +1,11 @@
 import Head from "next/head";
-import { useState } from "react";
 import { TaskCard } from "../components/TaskCard";
 import firebaseInit from "../db/firestore";
+import { useRequireAuth } from "../hooks/useRequireAuth";
 
 export default function Home({ tasks }) {
-    const [taskId, setTaskId] = useState(null);
-    const [edit, setEdit] = useState(false);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
+    const auth = useRequireAuth();
+    if (!auth.user) return null;
     return (
         <div className="flex flex-col items-center">
             <Head>

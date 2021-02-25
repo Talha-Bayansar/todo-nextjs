@@ -1,18 +1,14 @@
 import React, { useState } from "react";
-import { useRouter } from "next/router";
-import firebaseInit from "../db/firestore";
+import "firebase/auth";
+import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const router = useRouter();
+    const auth = useAuth();
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const firebase = await firebaseInit();
-        const auth = firebase.auth();
-        auth.signInWithEmailAndPassword(email, password)
-            .then(() => router.push("/"))
-            .catch((e) => console.log(e));
+        auth.login(email, password);
     };
     return (
         <div className="flex items-center justify-center w-screen h-screen">

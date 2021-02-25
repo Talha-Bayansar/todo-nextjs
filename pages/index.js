@@ -1,11 +1,8 @@
 import Head from "next/head";
 import { TaskCard } from "../components/TaskCard";
 import firebaseInit from "../db/firestore";
-import { useRequireAuth } from "../hooks/useRequireAuth";
 
 export default function Home({ tasks }) {
-    const auth = useRequireAuth();
-    if (!auth.user) return null;
     return (
         <div className="flex flex-col items-center">
             <Head>

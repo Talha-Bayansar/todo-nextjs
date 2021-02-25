@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import "firebase/auth";
-import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const auth = useAuth();
     const handleSubmit = async (e) => {
         e.preventDefault();
-        auth.login(email, password);
     };
     return (
         <div className="flex items-center justify-center w-full mt-20">

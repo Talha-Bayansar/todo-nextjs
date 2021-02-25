@@ -5,11 +5,8 @@ import { TaskCard } from "../../components/TaskCard";
 import firebaseInit from "../../db/firestore";
 import { Add } from "@material-ui/icons";
 import { EditTask } from "../../components/EditTask";
-import { useRequireAuth } from "../../hooks/useRequireAuth";
 
 const Tasks = ({ tasks }) => {
-    const auth = useRequireAuth();
-    if (!auth.user) return null;
     const [isVisible, setIsVisible] = useState(false);
     const [taskId, setTaskId] = useState(null);
     const [edit, setEdit] = useState(false);

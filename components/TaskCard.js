@@ -3,6 +3,7 @@ import firebaseInit from "../db/firestore";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CheckIcon from "@material-ui/icons/Check";
 import EditIcon from "@material-ui/icons/Edit";
+import ReactReadMoreReadLess from "react-read-more-read-less";
 
 export const TaskCard = ({
     task,
@@ -64,7 +65,15 @@ export const TaskCard = ({
                         checked && "line-through"
                     } whitespace-pre-line my-3`}
                 >
-                    {task.description}
+                    <ReactReadMoreReadLess
+                        charLimit={150}
+                        readMoreText={"Read more"}
+                        readLessText={"Read less"}
+                        readMoreClassName="text-blue-800"
+                        readLessClassName="text-blue-800"
+                    >
+                        {task.description}
+                    </ReactReadMoreReadLess>
                 </p>
                 <span className="block text-gray-500">{date2}</span>
             </div>

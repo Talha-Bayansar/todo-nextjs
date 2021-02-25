@@ -21,16 +21,7 @@ export default function Home({ tasks }) {
             </h1>
             <div className="flex flex-wrap justify-center mt-5">
                 {tasks.map((task) => (
-                    <TaskCard
-                        key={task.id}
-                        task={task}
-                        setEdit={setEdit}
-                        setTitle={setTitle}
-                        setDescription={setDescription}
-                        setTaskId={setTaskId}
-                        setDate={setDate}
-                        setTime={setTime}
-                    />
+                    <TaskCard key={task.id} task={task} />
                 ))}
             </div>
         </div>

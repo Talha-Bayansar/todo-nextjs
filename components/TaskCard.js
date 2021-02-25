@@ -56,16 +56,10 @@ export const TaskCard = ({
             }`}
         >
             <div className="flex flex-col justify-between flex-grow">
-                <h1
-                    onChange={(e) => {
-                        setTitle(e.target.value);
-                    }}
-                    className={`text-2xl ${checked && "line-through"}`}
-                >
+                <h1 className={`text-2xl ${checked && "line-through"}`}>
                     {task.title}
                 </h1>
                 <p
-                    onChange={(e) => setDescription(e.target.value)}
                     className={`${
                         checked && "line-through"
                     } whitespace-pre-line my-3`}
@@ -82,34 +76,42 @@ export const TaskCard = ({
                 >
                     <CheckIcon />
                 </button>
-                <button
-                    onClick={() => {
-                        console.log(`${day}-${month}-${year}`);
-                        setTitle(task.title);
-                        setDescription(task.description);
-                        setTaskId(task.id);
-                        setEdit(true);
-                        setDate(
-                            `${year
-                                .toString()
-                                .padStart(2, "0")}-${month
-                                .toString()
-                                .padStart(2, "0")}-${day
-                                .toString()
-                                .padStart(2, "0")}`
-                        );
-                        setTime(time);
-                    }}
-                    className="focus:outline-none my-1 outline-none block rounded-full bg-yellow-600 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
-                >
-                    <EditIcon />
-                </button>
-                <button
-                    onClick={handleDelete}
-                    className="focus:outline-none my-1 outline-none block rounded-full bg-red-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
-                >
-                    <DeleteIcon />
-                </button>
+                {setEdit && (
+                    <>
+                        <button
+                            onClick={() => {
+                                console.log(`${day}-${month}-${year}`);
+                                setTitle(task.title);
+                                setDescription(task.description);
+                                setTaskId(task.id);
+                                setEdit(true);
+                                setDate(
+                                    `${year
+                                        .toString()
+                                        .padStart(
+                                            2,
+                                            "0"
+                                        )}-${month
+                                        .toString()
+                                        .padStart(
+                                            2,
+                                            "0"
+                                        )}-${day.toString().padStart(2, "0")}`
+                                );
+                                setTime(time);
+                            }}
+                            className="focus:outline-none my-1 outline-none block rounded-full bg-yellow-600 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
+                        >
+                            <EditIcon />
+                        </button>
+                        <button
+                            onClick={handleDelete}
+                            className="focus:outline-none my-1 outline-none block rounded-full bg-red-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
+                        >
+                            <DeleteIcon />
+                        </button>
+                    </>
+                )}
             </div>
         </div>
     );

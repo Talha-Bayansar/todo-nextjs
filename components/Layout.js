@@ -18,7 +18,6 @@ export const Layout = ({ children }) => {
     return (
         <div className="flex flex-col items-center w-full h-screen sm:h-auto">
             <nav className="flex bg-white justify-between items-center sm:fixed top-0 w-full h-16 py-4 px-8 z-10 shadow-lg">
-                {/* <h1 className="text-3xl font-bold block">Logo</h1> */}
                 <Image
                     src="/icon.png"
                     alt="Planner Logo"

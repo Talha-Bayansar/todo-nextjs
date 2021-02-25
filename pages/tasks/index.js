@@ -39,11 +39,11 @@ const Tasks = ({ tasks }) => {
                 onClick={() => {
                     setIsVisible(true);
                 }}
-                className="focus:outline-none outline-none fixed bottom-28 right-4 text-white rounded-full bg-blue-500 p-2 shadow-mat hover:bg-blue-400 active:bg-blue-400"
+                className="focus:outline-none outline-none fixed bottom-28 right-4 text-white rounded-full bg-blue-500 p-2 shadow-mat hover:bg-blue-400 active:bg-blue-400 z-10"
             >
                 <Add />
             </button>
-            <div className="flex flex-wrap justify-center mt-10">
+            <div className="flex flex-wrap justify-center mt-5">
                 {allTasks === undefined
                     ? tasks.map((task) => (
                           <TaskCard

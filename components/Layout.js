@@ -9,7 +9,11 @@ export const Layout = ({ children }) => {
     const day = currentDate.getDate();
     const month = currentDate.getMonth() + 1;
     const year = currentDate.getFullYear();
-    const date = `${day}-${month}-${year}`;
+    const date = `${day
+        .toString()
+        .padStart(2, "0")}-${month
+        .toString()
+        .padStart(2, "0")}-${year.toString().padStart(2, "0")}`;
     return (
         <div className="flex flex-col items-center w-full">
             <nav className="flex bg-gray-200 justify-between items-center fixed top-0 w-full h-16 px-8 z-10 shadow-lg">
@@ -30,7 +34,7 @@ export const Layout = ({ children }) => {
                             <ExitToAppIcon />
                         </a>
                     </Link>
-                    <span className="flex items-center px-4 text-green-700 font-bold">
+                    <span className="flex items-center px-4 text-blue-600 font-bold">
                         {date}
                     </span>
                 </div>

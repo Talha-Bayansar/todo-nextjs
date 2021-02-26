@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Layout } from "../components/Layout";
-import { AuthProvider } from "../hooks/useAuth";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
@@ -201,11 +200,9 @@ function MyApp({ Component, pageProps }) {
                 <link href="/manifest.json" rel="manifest" />
             </Head>
 
-            <AuthProvider>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
-            </AuthProvider>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
         </>
     );
 }

@@ -1,65 +1,45 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import axios from "axios";
+import Head from "next/head";
+import { TaskCard } from "../components/TaskCard";
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+export default function Home({ tasks }) {
+    console.log(tasks);
+    return (
+        <div className="flex flex-col items-center">
+            <Head>
+                <title>Home</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <h1 className="text-4xl border-t-2 border-b-2 w-min py-2 p-6">
+                Vandaag
+            </h1>
+            <div className="flex flex-wrap justify-center mt-5">
+                {tasks.map((task) => (
+                    <TaskCard key={task.id} task={task} />
+                ))}
+            </div>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    );
 }
+
+export async function getServerSideProps() {
+    const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/tasks`
+    );
+
+    return {
+        props: {
+            tasks: data,
+        },
+    };
+}
+
+// const now = new Date();
+//     const today = now.getDate().toString().padStart(2, "0");
+//     const tomorrow = (now.getDate() + 1).toString().padStart(2, "0");
+//     const month = (now.getMonth() + 1).toString().padStart(2, "0");
+//     const year = now.getFullYear().toString().padStart(2, "0");
+//     const date1 = `${year}-${month}-${today}`;
+//     const date2 = `${year}-${month}-${tomorrow}`;
+//     const date11 = new Date(date1 + " " + "00:00");
+//     const date22 = new Date(date2 + " " + "00:00");

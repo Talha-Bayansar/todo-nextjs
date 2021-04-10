@@ -1,3 +1,4 @@
+import moment from "moment";
 import React from "react";
 
 export const EditTask = ({
@@ -61,7 +62,9 @@ export const EditTask = ({
                             className="focus:outline-none rounded-md p-2 shadow-md w-min"
                             type="date"
                             name="date"
-                            onChange={(e) => setDate(e.target.value)}
+                            onChange={(e) => {
+                                setDate(e.target.value);
+                            }}
                             value={date}
                         />
                     </div>
@@ -71,7 +74,9 @@ export const EditTask = ({
                             className="focus:outline-none rounded-md p-2 shadow-md w-min"
                             type="time"
                             name="time"
-                            onChange={(e) => setTime(e.target.value)}
+                            onChange={(e) => {
+                                setTime(e.target.value);
+                            }}
                             value={time}
                         />
                     </div>

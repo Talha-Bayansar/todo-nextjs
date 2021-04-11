@@ -1,27 +1,21 @@
+import moment from "moment";
 import React, { useState } from "react";
 
 export const CreateTask = ({ setIsVisible }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const now = new Date();
     const [date, setDate] = useState(
-        `${now.getFullYear()}-${(now.getMonth() + 1)
-            .toString()
-            .padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}`
+        moment().locale("nl-be").format("YYYY-MM-DD")
     );
-    const [time, setTime] = useState(
-        `${now
-            .getHours()
-            .toString()
-            .padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`
-    );
+    const [time, setTime] = useState(moment().locale("nl-be").format("LT"));
+    const [dateTime, setDateTime] = useState(moment(date + " " + time));
     const handleSubmit = async () => {
-        console.log("created");
-        console.log(date);
-        console.log(time);
-        console.log();
         if (title !== "" && description !== "") {
-            console.log("CREATE TASK");
+            console.log(
+                `CREATE TASK:\ntitle: ${title}\ndescription: ${description}\ndate: ${date}\ntime: ${time}\ndate&time:${dateTime
+                    .locale("nl-be")
+                    .format("L")} - ${dateTime.locale("nl-be").format("LT")}`
+            );
             setTitle("");
             setDescription("");
             setDate("");
@@ -67,7 +61,12 @@ export const CreateTask = ({ setIsVisible }) => {
                             className="focus:outline-none rounded-md p-2 shadow-md w-min"
                             type="date"
                             name="date"
-                            onChange={(e) => setDate(e.target.value)}
+                            onChange={(e) => {
+                                setDate(e.target.value);
+                                setDateTime(
+                                    moment(e.target.value + " " + time)
+                                );
+                            }}
                             value={date}
                         />
                     </div>
@@ -77,7 +76,12 @@ export const CreateTask = ({ setIsVisible }) => {
                             className="focus:outline-none rounded-md p-2 shadow-md w-min"
                             type="time"
                             name="time"
-                            onChange={(e) => setTime(e.target.value)}
+                            onChange={(e) => {
+                                setTime(e.target.value);
+                                setDateTime(
+                                    moment(date + " " + e.target.value)
+                                );
+                            }}
                             value={time}
                         />
                     </div>

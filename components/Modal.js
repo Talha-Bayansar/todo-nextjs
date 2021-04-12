@@ -3,7 +3,7 @@ import { parseCookies } from "nookies";
 import React from "react";
 import { useTask } from "../contexts/useTask";
 
-const Modal = (props) => {
+const Modal = () => {
     const { setIsDelete, setTaskToDelete, taskToDelete } = useTask();
 
     const handleDelete = async () => {
@@ -31,7 +31,9 @@ const Modal = (props) => {
                 className="w-full h-full bg-black opacity-50"
             />
             <div className="animate-grow absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md">
-                <div className="block mb-2">{props.description}</div>
+                <div className="block mb-2">
+                    Ben je zeker dat je deze taak wilt verwijderen?
+                </div>
                 <div className="flex justify-end">
                     <button
                         onClick={() => setIsDelete(false)}

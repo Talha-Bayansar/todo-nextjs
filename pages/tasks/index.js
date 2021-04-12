@@ -38,9 +38,7 @@ const Tasks = ({ tasks }) => {
             </div>
             {isVisible && <CreateTask setIsVisible={setIsVisible} />}
             {edit && <EditTask setEdit={setEdit} />}
-            {isDelete && (
-                <Modal description="Ben je zeker dat je deze taak wilt verwijderen?" />
-            )}
+            {isDelete && <Modal />}
         </div>
     );
 };

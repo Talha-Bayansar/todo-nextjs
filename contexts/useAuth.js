@@ -7,6 +7,7 @@ const AuthContext = createContext();
 
 export function AuthProvider(props) {
     const [user, setUser] = useState({});
+    const [isLogout, setIsLogout] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -49,6 +50,8 @@ export function AuthProvider(props) {
         setUser,
         signIn,
         signOut,
+        isLogout,
+        setIsLogout,
     };
 
     return (

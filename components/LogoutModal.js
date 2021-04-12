@@ -24,13 +24,13 @@ const LogoutModal = () => {
                 <div className="flex justify-end">
                     <button
                         onClick={() => setIsLogout(false)}
-                        className="focus:outline-none block font-bold text-white bg-red-500 rounded-sm p-1 m-1 hover:bg-blue-400"
+                        className="focus:outline-none block font-bold text-white bg-red-500 rounded-sm p-1 m-1 hover:bg-red-400"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={handleLogout}
-                        className="focus:outline-none block font-bold text-white bg-blue-500 rounded-sm p-1 m-1 hover:bg-red-400"
+                        className="focus:outline-none block font-bold text-white bg-blue-500 rounded-sm p-1 m-1 hover:bg-blue-400"
                     >
                         Logout
                     </button>

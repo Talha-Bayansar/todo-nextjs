@@ -8,6 +8,7 @@ const AuthContext = createContext();
 export function AuthProvider(props) {
     const [user, setUser] = useState({});
     const [isLogout, setIsLogout] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -30,10 +31,11 @@ export function AuthProvider(props) {
                 setUser(res.data.user);
                 setCookie(null, "jwt", res.data.jwt);
                 setCookie(null, "user", JSON.stringify(res.data.user));
+                setErrorMessage(null);
                 router.push("/");
             })
             .catch((error) => {
-                console.log("An error occured:", error.response);
+                setErrorMessage("Failed to login!\nTry again.");
             });
     };
 
@@ -52,6 +54,7 @@ export function AuthProvider(props) {
         signOut,
         isLogout,
         setIsLogout,
+        errorMessage,
     };
 
     return (

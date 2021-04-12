@@ -4,6 +4,8 @@ import CheckIcon from "@material-ui/icons/Check";
 import EditIcon from "@material-ui/icons/Edit";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import moment from "moment";
+import axios from "axios";
+import { parseCookies } from "nookies";
 
 export const TaskCard = ({
     task,
@@ -20,6 +22,15 @@ export const TaskCard = ({
 
     const handleDelete = async () => {
         console.log("DELETE TASK");
+        const jwt = parseCookies().jwt;
+        await axios
+            .delete(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${task.id}`, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            })
+            .then((res) => console.log("SUCCES", res))
+            .catch((err) => console.log(err, jwt));
     };
 
     const checkTodo = async () => {

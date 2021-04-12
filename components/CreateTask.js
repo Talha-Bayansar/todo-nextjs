@@ -1,4 +1,6 @@
+import axios from "axios";
 import moment from "moment";
+import { parseCookies } from "nookies";
 import React, { useState } from "react";
 
 export const CreateTask = ({ setIsVisible }) => {
@@ -9,13 +11,28 @@ export const CreateTask = ({ setIsVisible }) => {
     );
     const [time, setTime] = useState(moment().locale("nl-be").format("LT"));
     const [dateTime, setDateTime] = useState(moment(date + " " + time));
-    const handleSubmit = async () => {
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const jwt = parseCookies().jwt;
         if (title !== "" && description !== "") {
             console.log(
                 `CREATE TASK:\ntitle: ${title}\ndescription: ${description}\ndate: ${date}\ntime: ${time}\ndate&time:${dateTime
                     .locale("nl-be")
                     .format("L")} - ${dateTime.locale("nl-be").format("LT")}`
             );
+            await axios
+                .post(`${process.env.NEXT_PUBLIC_API_URL}/tasks`, {
+                    data: {
+                        title: title,
+                        description: description,
+                    },
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
+                    },
+                })
+                .then((res) => console.log("SUCCES", res))
+                .catch((error) => console.log(error, jwt));
             setTitle("");
             setDescription("");
             setDate("");
@@ -31,7 +48,7 @@ export const CreateTask = ({ setIsVisible }) => {
             />
             <form
                 autoComplete="off"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={(e) => handleSubmit(e)}
                 className="animate-grow absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
             >
                 <div className="flex flex-col my-2">
@@ -88,7 +105,7 @@ export const CreateTask = ({ setIsVisible }) => {
                 </div>
 
                 <button
-                    onClick={handleSubmit}
+                    type="submit"
                     className="focus:outline-none shadow-mat outline-none my-2 bg-white rounded-md py-2 hover:bg-green-300 transition-colors"
                 >
                     Taak aanmaken

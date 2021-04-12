@@ -88,7 +88,12 @@ export async function getServerSideProps(context) {
     }
 
     const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/tasks`
+        `${process.env.NEXT_PUBLIC_API_URL}/tasks`,
+        {
+            headers: {
+                Authorization: `Bearer ${jwt}`,
+            },
+        }
     );
 
     return {

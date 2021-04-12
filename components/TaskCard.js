@@ -14,7 +14,7 @@ export const TaskCard = ({
     setDate,
     setTime,
 }) => {
-    const [checked, setChecked] = useState(task.checked);
+    const [checked, setChecked] = useState(task.isChecked);
     const date = moment(task.date).locale("nl-be").format("YYYY-MM-DD");
     const time = moment(task.date).locale("nl-be").format("LT");
 

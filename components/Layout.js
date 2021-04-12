@@ -5,18 +5,11 @@ import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Image from "next/image";
 import { useAuth } from "../contexts/useAuth";
+import moment from "moment";
 
 export const Layout = ({ children }) => {
     const { user, signOut } = useAuth();
-    const currentDate = new Date();
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-    const date = `${day
-        .toString()
-        .padStart(2, "0")}-${month
-        .toString()
-        .padStart(2, "0")}-${year.toString().padStart(2, "0")}`;
+    const date = moment().locale("nl-be").format("DD-MM-YYYY");
     return (
         <div className="flex flex-col items-center w-full h-screen sm:h-auto">
             <nav className="flex bg-white justify-between items-center sm:fixed top-0 w-full h-16 py-4 px-8 z-10 shadow-lg">

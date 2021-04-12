@@ -12,7 +12,8 @@ import Modal from "../../components/Modal";
 const Tasks = ({ tasks }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [edit, setEdit] = useState(false);
-    const { isDelete } = useTask();
+    const { isDelete, allTasks, setAllTasks } = useTask();
+    setAllTasks(tasks);
     return (
         <div className="flex flex-col items-center">
             <Head>
@@ -28,8 +29,8 @@ const Tasks = ({ tasks }) => {
                 <Add />
             </button>
             <div className="flex flex-wrap justify-center mt-5">
-                {tasks.length > 0 ? (
-                    tasks.map((task) => (
+                {allTasks.length > 0 ? (
+                    allTasks.map((task) => (
                         <TaskCard key={task.id} task={task} setEdit={setEdit} />
                     ))
                 ) : (

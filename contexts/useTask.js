@@ -6,6 +6,8 @@ export function TaskProvider(props) {
     const [taskToEdit, setTaskToEdit] = useState({});
     const [taskToDelete, setTaskToDelete] = useState({});
     const [isDelete, setIsDelete] = useState(false);
+    const [allTasks, setAllTasks] = useState([]);
+    const [todayTasks, setTodayTasks] = useState([]);
 
     const api = {
         taskToEdit,
@@ -14,6 +16,10 @@ export function TaskProvider(props) {
         setIsDelete,
         taskToDelete,
         setTaskToDelete,
+        allTasks,
+        setAllTasks,
+        todayTasks,
+        setTodayTasks,
     };
 
     return (

@@ -2,8 +2,11 @@ import axios from "axios";
 import Head from "next/head";
 import { TaskCard } from "../components/TaskCard";
 import { parseCookies } from "nookies";
+import { useTask } from "../contexts/useTask";
 
 export default function Home({ tasks }) {
+    const { todayTasks, setTodayTasks } = useTask();
+    setTodayTasks(tasks);
     return (
         <div className="flex flex-col items-center">
             <Head>
@@ -14,8 +17,10 @@ export default function Home({ tasks }) {
                 Vandaag
             </h1>
             <div className="flex flex-wrap justify-center mt-5">
-                {tasks.length > 0 ? (
-                    tasks.map((task) => <TaskCard key={task.id} task={task} />)
+                {todayTasks.length > 0 ? (
+                    todayTasks.map((task) => (
+                        <TaskCard key={task.id} task={task} />
+                    ))
                 ) : (
                     <p className="block text-center">
                         Je hebt geen taken voor vandaag!

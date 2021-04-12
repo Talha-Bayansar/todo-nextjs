@@ -6,10 +6,13 @@ import { Add } from "@material-ui/icons";
 import { EditTask } from "../../components/EditTask";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import { useTask } from "../../contexts/useTask";
+import Modal from "../../components/Modal";
 
 const Tasks = ({ tasks }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [edit, setEdit] = useState(false);
+    const { isDelete } = useTask();
     return (
         <div className="flex flex-col items-center">
             <Head>
@@ -25,12 +28,19 @@ const Tasks = ({ tasks }) => {
                 <Add />
             </button>
             <div className="flex flex-wrap justify-center mt-5">
-                {tasks.map((task) => (
-                    <TaskCard key={task.id} task={task} setEdit={setEdit} />
-                ))}
+                {tasks.length > 0 ? (
+                    tasks.map((task) => (
+                        <TaskCard key={task.id} task={task} setEdit={setEdit} />
+                    ))
+                ) : (
+                    <p className="block text-center">Je hebt geen taken.</p>
+                )}
             </div>
             {isVisible && <CreateTask setIsVisible={setIsVisible} />}
             {edit && <EditTask setEdit={setEdit} />}
+            {isDelete && (
+                <Modal description="Ben je zeker dat je deze taak wilt verwijderen?" />
+            )}
         </div>
     );
 };

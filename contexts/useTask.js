@@ -4,10 +4,16 @@ const TaskContext = createContext();
 
 export function TaskProvider(props) {
     const [taskToEdit, setTaskToEdit] = useState({});
+    const [taskToDelete, setTaskToDelete] = useState({});
+    const [isDelete, setIsDelete] = useState(false);
 
     const api = {
         taskToEdit,
         setTaskToEdit,
+        isDelete,
+        setIsDelete,
+        taskToDelete,
+        setTaskToDelete,
     };
 
     return (

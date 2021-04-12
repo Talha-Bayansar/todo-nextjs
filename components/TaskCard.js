@@ -4,28 +4,11 @@ import CheckIcon from "@material-ui/icons/Check";
 import EditIcon from "@material-ui/icons/Edit";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import moment from "moment";
-import axios from "axios";
-import { parseCookies } from "nookies";
 import { useTask } from "../contexts/useTask";
 
 export const TaskCard = ({ task, setEdit }) => {
-    const { setTaskToEdit } = useTask();
+    const { setTaskToEdit, setIsDelete, setTaskToDelete } = useTask();
     const [checked, setChecked] = useState(task.isChecked);
-    const date = moment(task.date).locale("nl-be").format("YYYY-MM-DD");
-    const time = moment(task.date).locale("nl-be").format("LT");
-
-    const handleDelete = async () => {
-        console.log("DELETE TASK");
-        const jwt = parseCookies().jwt;
-        await axios
-            .delete(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${task.id}`, {
-                headers: {
-                    Authorization: `Bearer ${jwt}`,
-                },
-            })
-            .then((res) => console.log("SUCCES", res))
-            .catch((err) => console.log(err, jwt));
-    };
 
     const checkTodo = async () => {
         console.log("CHECK TASK");
@@ -85,7 +68,11 @@ export const TaskCard = ({ task, setEdit }) => {
                             <EditIcon />
                         </button>
                         <button
-                            onClick={handleDelete}
+                            onClick={() => {
+                                setTaskToDelete(task);
+                                setIsDelete(true);
+                                console.log("isDelete true");
+                            }}
                             className="focus:outline-none my-1 outline-none block rounded-full bg-red-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
                         >
                             <DeleteIcon />

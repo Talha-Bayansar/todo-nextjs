@@ -14,9 +14,16 @@ export default function Home({ tasks }) {
                 Vandaag
             </h1>
             <div className="flex flex-wrap justify-center mt-5">
-                {tasks.map((task) => (
-                    <TaskCard key={task.id} task={task} />
-                ))}
+                {tasks.length > 0 ? (
+                    tasks.map((task) => <TaskCard key={task.id} task={task} />)
+                ) : (
+                    <p className="block text-center">
+                        Je hebt geen taken voor vandaag!
+                        <br />
+                        Maak er gebruik van door andere taken af te werken of
+                        geniet van je dag.
+                    </p>
+                )}
             </div>
         </div>
     );

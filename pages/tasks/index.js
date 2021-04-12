@@ -5,6 +5,7 @@ import { TaskCard } from "../../components/TaskCard";
 import { Add } from "@material-ui/icons";
 import { EditTask } from "../../components/EditTask";
 import axios from "axios";
+import { parseCookies } from "nookies";
 
 const Tasks = ({ tasks }) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -77,7 +78,15 @@ const Tasks = ({ tasks }) => {
     );
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const jwt = parseCookies(context).jwt;
+
+    if (!jwt) {
+        context.res.setHeader("location", "/login");
+        context.res.statusCode = 302;
+        context.res.end();
+    }
+
     const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/tasks`
     );

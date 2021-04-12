@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { setCookie } from "nookies";
 
 const AuthContext = createContext();
 
@@ -16,7 +17,8 @@ export function AuthProvider(props) {
                 password: password,
             })
             .then((res) => {
-                setUser(res.data);
+                setUser(res.data.user);
+                setCookie(null, "jwt", res.data.jwt);
                 router.push("/");
             })
             .catch((error) => {

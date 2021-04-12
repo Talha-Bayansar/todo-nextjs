@@ -1,6 +1,7 @@
 import axios from "axios";
 import Head from "next/head";
 import { TaskCard } from "../components/TaskCard";
+import { parseCookies } from "nookies";
 
 export default function Home({ tasks }) {
     console.log(tasks);
@@ -22,7 +23,15 @@ export default function Home({ tasks }) {
     );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+    const jwt = parseCookies(context).jwt;
+
+    if (!jwt) {
+        context.res.setHeader("location", "/login");
+        context.res.statusCode = 302;
+        context.res.end();
+    }
+
     const { data } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/tasks`
     );
@@ -33,13 +42,3 @@ export async function getServerSideProps() {
         },
     };
 }
-
-// const now = new Date();
-//     const today = now.getDate().toString().padStart(2, "0");
-//     const tomorrow = (now.getDate() + 1).toString().padStart(2, "0");
-//     const month = (now.getMonth() + 1).toString().padStart(2, "0");
-//     const year = now.getFullYear().toString().padStart(2, "0");
-//     const date1 = `${year}-${month}-${today}`;
-//     const date2 = `${year}-${month}-${tomorrow}`;
-//     const date11 = new Date(date1 + " " + "00:00");
-//     const date22 = new Date(date2 + " " + "00:00");

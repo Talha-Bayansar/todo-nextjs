@@ -2,8 +2,10 @@ import axios from "axios";
 import moment from "moment";
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
+import { useTask } from "../contexts/useTask";
 
 export const CreateTask = ({ setIsVisible }) => {
+    const { allTasks, addTask } = useTask();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState(
@@ -22,23 +24,24 @@ export const CreateTask = ({ setIsVisible }) => {
                     .locale("nl-be")
                     .format("L")} - ${dateTime.locale("nl-be").format("LT")}`
             );
-            await axios
-                .post(
-                    `${process.env.NEXT_PUBLIC_API_URL}/tasks`,
-                    {
-                        title: title,
-                        description: description,
-                        date: dateTime,
-                        isChecked: false,
+            const { data } = await axios.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/tasks`,
+                {
+                    title: title,
+                    description: description,
+                    date: dateTime,
+                    isChecked: false,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
                     },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${jwt}`,
-                        },
-                    }
-                )
-                .then(({ data }) => console.log("SUCCES", data))
-                .catch((error) => console.log(error, jwt));
+                }
+            );
+            console.log(data);
+            console.log(allTasks);
+            addTask(data);
+            console.log([...allTasks, data]);
             setTitle("");
             setDescription("");
             setDate("");

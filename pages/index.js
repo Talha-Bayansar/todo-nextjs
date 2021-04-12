@@ -3,10 +3,14 @@ import Head from "next/head";
 import { TaskCard } from "../components/TaskCard";
 import { parseCookies } from "nookies";
 import { useTask } from "../contexts/useTask";
+import { useEffect } from "react";
 
 export default function Home({ tasks }) {
-    const { todayTasks, setTodayTasks } = useTask();
-    setTodayTasks(tasks);
+    const { allTasks, setAllTasks } = useTask();
+    useEffect(() => {
+        setAllTasks(tasks);
+    }, []);
+
     return (
         <div className="flex flex-col items-center">
             <Head>
@@ -17,8 +21,8 @@ export default function Home({ tasks }) {
                 Vandaag
             </h1>
             <div className="flex flex-wrap justify-center mt-5">
-                {todayTasks.length > 0 ? (
-                    todayTasks.map((task) => (
+                {allTasks.length > 0 ? (
+                    allTasks.map((task) => (
                         <TaskCard key={task.id} task={task} />
                     ))
                 ) : (

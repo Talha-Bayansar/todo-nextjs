@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CreateTask } from "../../components/CreateTask";
 import { TaskCard } from "../../components/TaskCard";
 import { Add } from "@material-ui/icons";
@@ -13,7 +13,10 @@ const Tasks = ({ tasks }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [edit, setEdit] = useState(false);
     const { isDelete, allTasks, setAllTasks } = useTask();
-    setAllTasks(tasks);
+    useEffect(() => {
+        setAllTasks(tasks);
+    }, []);
+
     return (
         <div className="flex flex-col items-center">
             <Head>

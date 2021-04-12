@@ -4,22 +4,25 @@ import React from "react";
 import { useTask } from "../contexts/useTask";
 
 const Modal = () => {
-    const { setIsDelete, setTaskToDelete, taskToDelete } = useTask();
+    const {
+        setIsDelete,
+        setTaskToDelete,
+        taskToDelete,
+        deleteTask,
+    } = useTask();
 
     const handleDelete = async () => {
         console.log("DELETE TASK");
         const jwt = parseCookies().jwt;
-        await axios
-            .delete(
-                `${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskToDelete.id}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${jwt}`,
-                    },
-                }
-            )
-            .then((res) => console.log("SUCCES", res))
-            .catch((err) => console.log(err, jwt));
+        const { data } = await axios.delete(
+            `${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskToDelete.id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${jwt}`,
+                },
+            }
+        );
+        deleteTask(data);
         setIsDelete(false);
         setTaskToDelete({});
     };

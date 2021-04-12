@@ -16,7 +16,7 @@ export function AuthProvider(props) {
         if (parseCookies().user) {
             getUser();
         }
-    }, [user]);
+    }, []);
 
     const signIn = async (email, password) => {
         console.log("LOGIN");

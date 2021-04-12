@@ -1,43 +1,60 @@
+import axios from "axios";
 import moment from "moment";
+import { parseCookies } from "nookies";
 import React, { useState } from "react";
+import { useTask } from "../contexts/useTask";
 
-export const EditTask = ({
-    setEdit,
-    title,
-    setTitle,
-    description,
-    setDescription,
-    taskId,
-    setTaskId,
-    time,
-    setTime,
-    date,
-    setDate,
-}) => {
+export const EditTask = ({ setEdit }) => {
+    const { taskToEdit, setTaskToEdit } = useTask();
+    const [title, setTitle] = useState(taskToEdit.title);
+    const [description, setDescription] = useState(taskToEdit.description);
+    const [date, setDate] = useState(
+        moment(taskToEdit.date).locale("nl-be").format("YYYY-MM-DD")
+    );
+    const [time, setTime] = useState(
+        moment(taskToEdit.date).locale("nl-be").format("LT")
+    );
     const [dateTime, setDateTime] = useState(moment(date + " " + time));
-    const handleSubmit = async () => {
-        console.log("edited");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const jwt = parseCookies().jwt;
         if (title !== "" && description !== "") {
             console.log(
                 `EDIT TASK:\ntitle: ${title}\ndescription: ${description}\ndate: ${date}\ntime: ${time}\ndate&time:${dateTime
                     .locale("nl-be")
                     .format("L")} - ${dateTime.locale("nl-be").format("LT")}`
             );
-            setTitle("");
-            setDescription("");
-            setTaskId(null);
+            await axios.put(
+                `${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskToEdit.id}`,
+                {
+                    title: title,
+                    description: description,
+                    date: dateTime,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${jwt}`,
+                    },
+                }
+            );
+            setTaskToEdit({});
             setEdit(false);
         }
     };
     return (
         <div className="flex items-center justify-center fixed top-0 left-0 h-screen w-screen z-20 shadow-md">
             <div
-                onClick={() => setEdit(false)}
+                onClick={() => {
+                    setTaskToEdit({});
+                    setEdit(false);
+                }}
                 className="w-full h-full bg-black opacity-50"
             />
             <form
                 autoComplete="off"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={(e) => handleSubmit(e)}
                 className="animate-grow absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
             >
                 <div className="flex flex-col my-2">
@@ -94,7 +111,7 @@ export const EditTask = ({
                 </div>
 
                 <button
-                    onClick={handleSubmit}
+                    type="submit"
                     className="focus:outline-none shadow-mat outline-none my-2 bg-white rounded-md py-2 hover:bg-green-300 transition-colors"
                 >
                     Taak aanmaken

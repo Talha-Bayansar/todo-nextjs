@@ -6,16 +6,10 @@ import ReactReadMoreReadLess from "react-read-more-read-less";
 import moment from "moment";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import { useTask } from "../contexts/useTask";
 
-export const TaskCard = ({
-    task,
-    setEdit,
-    setTitle,
-    setDescription,
-    setTaskId,
-    setDate,
-    setTime,
-}) => {
+export const TaskCard = ({ task, setEdit }) => {
+    const { setTaskToEdit } = useTask();
     const [checked, setChecked] = useState(task.isChecked);
     const date = moment(task.date).locale("nl-be").format("YYYY-MM-DD");
     const time = moment(task.date).locale("nl-be").format("LT");
@@ -83,13 +77,8 @@ export const TaskCard = ({
                     <>
                         <button
                             onClick={() => {
-                                console.log(`${date}---${time}`);
-                                setTitle(task.title);
-                                setDescription(task.description);
-                                setTaskId(task.id);
+                                setTaskToEdit(task);
                                 setEdit(true);
-                                setDate(date);
-                                setTime(time);
                             }}
                             className="focus:outline-none my-1 outline-none block rounded-full bg-yellow-600 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
                         >

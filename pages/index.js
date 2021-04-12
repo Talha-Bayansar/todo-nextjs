@@ -4,7 +4,6 @@ import { TaskCard } from "../components/TaskCard";
 import { parseCookies } from "nookies";
 
 export default function Home({ tasks }) {
-    console.log(tasks);
     return (
         <div className="flex flex-col items-center">
             <Head>

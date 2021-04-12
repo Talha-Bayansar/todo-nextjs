@@ -9,7 +9,6 @@ import moment from "moment";
 
 const TopBar = () => {
     const { user, signOut } = useAuth();
-    console.log(user);
     const date = moment().locale("nl-be").format("DD-MM-YYYY");
     return (
         <nav className="flex bg-white justify-between items-center sm:fixed top-0 w-full h-16 py-4 px-8 z-10 shadow-lg">

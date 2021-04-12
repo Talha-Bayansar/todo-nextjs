@@ -1,13 +1,22 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { destroyCookie, setCookie } from "nookies";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
 
 const AuthContext = createContext();
 
 export function AuthProvider(props) {
     const [user, setUser] = useState({});
     const router = useRouter();
+
+    useEffect(() => {
+        async function getUser() {
+            setUser(JSON.parse(parseCookies().user));
+        }
+        if (parseCookies().user) {
+            getUser();
+        }
+    }, [user]);
 
     const signIn = async (email, password) => {
         console.log("LOGIN");
@@ -19,6 +28,7 @@ export function AuthProvider(props) {
             .then((res) => {
                 setUser(res.data.user);
                 setCookie(null, "jwt", res.data.jwt);
+                setCookie(null, "user", JSON.stringify(res.data.user));
                 router.push("/");
             })
             .catch((error) => {
@@ -30,6 +40,7 @@ export function AuthProvider(props) {
         console.log("LOGOUT");
         setUser({});
         destroyCookie(null, "jwt");
+        destroyCookie(null, "user");
         router.push("/login");
     };
 

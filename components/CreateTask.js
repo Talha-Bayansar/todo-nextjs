@@ -15,6 +15,7 @@ export const CreateTask = ({ setIsVisible }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const jwt = parseCookies().jwt;
+
         if (title !== "" && description !== "") {
             console.log(
                 `CREATE TASK:\ntitle: ${title}\ndescription: ${description}\ndate: ${date}\ntime: ${time}\ndate&time:${dateTime
@@ -22,16 +23,21 @@ export const CreateTask = ({ setIsVisible }) => {
                     .format("L")} - ${dateTime.locale("nl-be").format("LT")}`
             );
             await axios
-                .post(`${process.env.NEXT_PUBLIC_API_URL}/tasks`, {
-                    data: {
+                .post(
+                    `${process.env.NEXT_PUBLIC_API_URL}/tasks`,
+                    {
                         title: title,
                         description: description,
+                        date: dateTime,
+                        isChecked: false,
                     },
-                    headers: {
-                        Authorization: `Bearer ${jwt}`,
-                    },
-                })
-                .then((res) => console.log("SUCCES", res))
+                    {
+                        headers: {
+                            Authorization: `Bearer ${jwt}`,
+                        },
+                    }
+                )
+                .then(({ data }) => console.log("SUCCES", data))
                 .catch((error) => console.log(error, jwt));
             setTitle("");
             setDescription("");

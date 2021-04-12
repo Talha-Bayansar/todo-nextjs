@@ -1,5 +1,5 @@
 import moment from "moment";
-import React from "react";
+import React, { useState } from "react";
 
 export const EditTask = ({
     setEdit,
@@ -14,10 +14,15 @@ export const EditTask = ({
     date,
     setDate,
 }) => {
+    const [dateTime, setDateTime] = useState(moment(date + " " + time));
     const handleSubmit = async () => {
         console.log("edited");
         if (title !== "" && description !== "") {
-            console.log("EDIT TASK");
+            console.log(
+                `EDIT TASK:\ntitle: ${title}\ndescription: ${description}\ndate: ${date}\ntime: ${time}\ndate&time:${dateTime
+                    .locale("nl-be")
+                    .format("L")} - ${dateTime.locale("nl-be").format("LT")}`
+            );
             setTitle("");
             setDescription("");
             setTaskId(null);
@@ -64,6 +69,9 @@ export const EditTask = ({
                             name="date"
                             onChange={(e) => {
                                 setDate(e.target.value);
+                                setDateTime(
+                                    moment(e.target.value + " " + time)
+                                );
                             }}
                             value={date}
                         />
@@ -76,6 +84,9 @@ export const EditTask = ({
                             name="time"
                             onChange={(e) => {
                                 setTime(e.target.value);
+                                setDateTime(
+                                    moment(date + " " + e.target.value)
+                                );
                             }}
                             value={time}
                         />

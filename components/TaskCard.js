@@ -3,6 +3,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import CheckIcon from "@material-ui/icons/Check";
 import EditIcon from "@material-ui/icons/Edit";
 import ReactReadMoreReadLess from "react-read-more-read-less";
+import moment from "moment";
 
 export const TaskCard = ({
     task,
@@ -14,23 +15,8 @@ export const TaskCard = ({
     setTime,
 }) => {
     const [checked, setChecked] = useState(task.checked);
-    // const date = new Date(task.date.seconds * 1000).toString().slice(0, 16);
-    const currentDate = new Date(task.date.seconds * 1000);
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-    const time = `${currentDate
-        .getHours()
-        .toString()
-        .padStart(2, "0")}:${currentDate
-        .getMinutes()
-        .toString()
-        .padStart(2, "0")}`;
-    const date2 = `${day
-        .toString()
-        .padStart(2, "0")}-${month
-        .toString()
-        .padStart(2, "0")}-${year} -> ${time}`;
+    const date = moment(task.date).locale("nl-be").format("YYYY-MM-DD");
+    const time = moment(task.date).locale("nl-be").format("LT");
 
     const handleDelete = async () => {
         console.log("DELETE TASK");
@@ -68,7 +54,11 @@ export const TaskCard = ({
                         {task.description}
                     </ReactReadMoreReadLess>
                 </p>
-                <span className="block text-gray-500">{date2}</span>
+                <span className="block text-gray-500">
+                    {moment(task.date)
+                        .locale("nl-be")
+                        .format("dddd DD/MM/YYYY, LT")}
+                </span>
             </div>
 
             <div className="flex flex-col w-min ml-4 justify-start">
@@ -82,24 +72,12 @@ export const TaskCard = ({
                     <>
                         <button
                             onClick={() => {
-                                console.log(`${day}-${month}-${year}`);
+                                console.log(`${date}---${time}`);
                                 setTitle(task.title);
                                 setDescription(task.description);
                                 setTaskId(task.id);
                                 setEdit(true);
-                                setDate(
-                                    `${year
-                                        .toString()
-                                        .padStart(
-                                            2,
-                                            "0"
-                                        )}-${month
-                                        .toString()
-                                        .padStart(
-                                            2,
-                                            "0"
-                                        )}-${day.toString().padStart(2, "0")}`
-                                );
+                                setDate(date);
                                 setTime(time);
                             }}
                             className="focus:outline-none my-1 outline-none block rounded-full bg-yellow-600 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"

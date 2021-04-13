@@ -31,6 +31,7 @@ export function AuthProvider(props) {
                 setUser(res.data.user);
                 setCookie(null, "jwt", res.data.jwt);
                 setCookie(null, "user", JSON.stringify(res.data.user));
+                setCookie(null, "userId", res.data.user.id);
                 setErrorMessage(null);
                 router.push("/");
             })
@@ -44,6 +45,7 @@ export function AuthProvider(props) {
         setUser({});
         destroyCookie(null, "jwt");
         destroyCookie(null, "user");
+        destroyCookie(null, "userId");
         router.push("/login");
     };
 

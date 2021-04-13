@@ -36,7 +36,7 @@ export default function Home({ tasks }) {
 
 export async function getServerSideProps(context) {
     const jwt = parseCookies(context).jwt;
-    const userId = JSON.parse(parseCookies(context).user).id;
+    const userId = parseCookies(context).userId;
     const now = moment();
 
     if (!jwt) {

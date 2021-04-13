@@ -1,4 +1,4 @@
-import { useState, useContext, createContext } from "react";
+import { useState, useContext, createContext, useEffect } from "react";
 
 const TaskContext = createContext();
 
@@ -7,6 +7,7 @@ export function TaskProvider(props) {
     const [taskToDelete, setTaskToDelete] = useState({});
     const [isDelete, setIsDelete] = useState(false);
     const [allTasks, setAllTasks] = useState([]);
+    const [todayTasks, setTodayTasks] = useState([]);
 
     function addTask(task) {
         setAllTasks([...allTasks, task]);
@@ -14,6 +15,16 @@ export function TaskProvider(props) {
 
     function deleteTask(task) {
         setAllTasks(allTasks.filter((t) => t.id !== task.id));
+    }
+
+    function updateTask(task) {
+        let newArray = allTasks;
+        for (const i in newArray) {
+            if (newArray[i].id === task.id) {
+                newArray[i] = task;
+            }
+        }
+        setAllTasks(newArray);
     }
 
     const api = {
@@ -25,8 +36,11 @@ export function TaskProvider(props) {
         setTaskToDelete,
         allTasks,
         setAllTasks,
+        todayTasks,
+        setTodayTasks,
         addTask,
         deleteTask,
+        updateTask,
     };
 
     return (

@@ -3,13 +3,10 @@ import Head from "next/head";
 import { TaskCard } from "../components/TaskCard";
 import { parseCookies } from "nookies";
 import { useTask } from "../contexts/useTask";
-import { useEffect } from "react";
+import moment from "moment";
 
 export default function Home({ tasks }) {
-    const { allTasks, setAllTasks } = useTask();
-    useEffect(() => {
-        setAllTasks(tasks);
-    }, []);
+    const { todayTasks, setTodayTasks } = useTask();
 
     return (
         <div className="flex flex-col items-center">
@@ -21,10 +18,8 @@ export default function Home({ tasks }) {
                 Vandaag
             </h1>
             <div className="flex flex-wrap justify-center mt-5">
-                {allTasks.length > 0 ? (
-                    allTasks.map((task) => (
-                        <TaskCard key={task.id} task={task} />
-                    ))
+                {tasks.length > 0 ? (
+                    tasks.map((task) => <TaskCard key={task.id} task={task} />)
                 ) : (
                     <p className="block text-center">
                         Je hebt geen taken voor vandaag!
@@ -40,6 +35,7 @@ export default function Home({ tasks }) {
 
 export async function getServerSideProps(context) {
     const jwt = parseCookies(context).jwt;
+    const now = moment();
 
     if (!jwt) {
         context.res.setHeader("location", "/login");
@@ -48,7 +44,9 @@ export async function getServerSideProps(context) {
     }
 
     const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/tasks`,
+        `${process.env.NEXT_PUBLIC_API_URL}/tasks?date_eq=${now.format(
+            "YYYY-MM-DD"
+        )}&_sort=time:ASC`,
         {
             headers: {
                 Authorization: `Bearer ${jwt}`,

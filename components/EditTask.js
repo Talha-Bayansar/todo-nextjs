@@ -5,16 +5,21 @@ import React, { useState } from "react";
 import { useTask } from "../contexts/useTask";
 
 export const EditTask = ({ setEdit }) => {
-    const { taskToEdit, setTaskToEdit } = useTask();
+    const { taskToEdit, setTaskToEdit, updateTask } = useTask();
     const [title, setTitle] = useState(taskToEdit.title);
     const [description, setDescription] = useState(taskToEdit.description);
     const [date, setDate] = useState(
         moment(taskToEdit.date).locale("nl-be").format("YYYY-MM-DD")
     );
     const [time, setTime] = useState(
-        moment(taskToEdit.date).locale("nl-be").format("LT")
+        `${moment(date + " " + taskToEdit.time)
+            .locale("nl-be")
+            .format("LT")}:00.000`
     );
     const [dateTime, setDateTime] = useState(moment(date + " " + time));
+
+    console.log(taskToEdit.date);
+    console.log(taskToEdit.time);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,20 +30,23 @@ export const EditTask = ({ setEdit }) => {
                     .locale("nl-be")
                     .format("L")} - ${dateTime.locale("nl-be").format("LT")}`
             );
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskToEdit.id}`,
-                {
-                    title: title,
-                    description: description,
-                    date: dateTime,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${jwt}`,
+            await axios
+                .put(
+                    `${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskToEdit.id}`,
+                    {
+                        title: title,
+                        description: description,
+                        date: date,
+                        time: time,
                     },
-                }
-            );
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${jwt}`,
+                        },
+                    }
+                )
+                .then(({ data }) => updateTask(data));
             setTaskToEdit({});
             setEdit(false);
         }
@@ -100,7 +108,7 @@ export const EditTask = ({ setEdit }) => {
                             type="time"
                             name="time"
                             onChange={(e) => {
-                                setTime(e.target.value);
+                                setTime(`${e.target.value}:00.000`);
                                 setDateTime(
                                     moment(date + " " + e.target.value)
                                 );

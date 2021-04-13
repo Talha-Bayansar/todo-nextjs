@@ -11,7 +11,9 @@ export const CreateTask = ({ setIsVisible }) => {
     const [date, setDate] = useState(
         moment().locale("nl-be").format("YYYY-MM-DD")
     );
-    const [time, setTime] = useState(moment().locale("nl-be").format("LT"));
+    const [time, setTime] = useState(
+        `${moment().locale("nl-be").format("LT")}:00.000`
+    );
     const [dateTime, setDateTime] = useState(moment(date + " " + time));
 
     const handleSubmit = async (e) => {
@@ -29,7 +31,8 @@ export const CreateTask = ({ setIsVisible }) => {
                 {
                     title: title,
                     description: description,
-                    date: dateTime,
+                    date: date,
+                    time: time,
                     isChecked: false,
                 },
                 {
@@ -38,8 +41,6 @@ export const CreateTask = ({ setIsVisible }) => {
                     },
                 }
             );
-            console.log(data);
-            console.log(allTasks);
             addTask(data);
             console.log([...allTasks, data]);
             setTitle("");
@@ -103,7 +104,7 @@ export const CreateTask = ({ setIsVisible }) => {
                             type="time"
                             name="time"
                             onChange={(e) => {
-                                setTime(e.target.value);
+                                setTime(`${e.target.value}:00.000`);
                                 setDateTime(
                                     moment(date + " " + e.target.value)
                                 );

@@ -45,7 +45,11 @@ export const TaskCard = ({ task, setEdit }) => {
                 <span className="block text-gray-500">
                     {moment(task.date)
                         .locale("nl-be")
-                        .format("dddd DD/MM/YYYY, LT")}
+                        .format("dddd DD/MM/YYYY") +
+                        ", " +
+                        moment(task.date + " " + task.time)
+                            .locale("nl-be")
+                            .format("LT")}
                 </span>
             </div>
 

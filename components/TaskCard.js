@@ -5,6 +5,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import moment from "moment";
 import { useTask } from "../contexts/useTask";
+import axios from "axios";
+import { parseCookies } from "nookies";
 
 export const TaskCard = ({ task, setEdit }) => {
     const { setTaskToEdit, setIsDelete, setTaskToDelete } = useTask();
@@ -12,6 +14,21 @@ export const TaskCard = ({ task, setEdit }) => {
 
     const checkTodo = async () => {
         console.log("CHECK TASK");
+
+        const jwt = parseCookies().jwt;
+
+        await axios.put(
+            `${process.env.NEXT_PUBLIC_API_URL}/tasks/${task.id}`,
+            {
+                isChecked: checked,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${jwt}`,
+                },
+            }
+        );
     };
 
     useEffect(() => {

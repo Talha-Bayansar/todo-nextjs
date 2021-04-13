@@ -12,8 +12,7 @@ export default function Home({ tasks }) {
     return (
         <div className="flex flex-col items-center">
             <Head>
-                <title>Home</title>
-                <link rel="icon" href="/favicon.ico" />
+                <title>Startpagina</title>
             </Head>
             <h1 className="text-4xl border-t-2 border-b-2 w-min py-2 p-6">
                 Vandaag

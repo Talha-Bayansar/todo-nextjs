@@ -81,7 +81,7 @@ if (!self.define) {
     });
   };
 }
-define("./sw.js",['./workbox-6b19f60b'], function (workbox) { 'use strict';
+define("./sw.js",['../../../../../Talha Bayansar/Documents/Javascript/planner-next/node_modules/workbox-routing/registerRoute.mjs', '../../../../../Talha Bayansar/Documents/Javascript/planner-next/node_modules/workbox-strategies/NetworkFirst.mjs', '../../../../../Talha Bayansar/Documents/Javascript/planner-next/node_modules/workbox-strategies/NetworkOnly.mjs', '../../../../../Talha Bayansar/Documents/Javascript/planner-next/node_modules/workbox-core/clientsClaim.mjs'], function (registerRoute_mjs, NetworkFirst_mjs, NetworkOnly_mjs, clientsClaim_mjs) { 'use strict';
 
   /**
   * Welcome to your Workbox-powered service worker!
@@ -97,8 +97,8 @@ define("./sw.js",['./workbox-6b19f60b'], function (workbox) { 'use strict';
 
   importScripts();
   self.skipWaiting();
-  workbox.clientsClaim();
-  workbox.registerRoute("/", new workbox.NetworkFirst({
+  clientsClaim_mjs.clientsClaim();
+  registerRoute_mjs.registerRoute("/", new NetworkFirst_mjs.NetworkFirst({
     "cacheName": "start-url",
     plugins: [{
       cacheWillUpdate: async ({
@@ -119,7 +119,7 @@ define("./sw.js",['./workbox-6b19f60b'], function (workbox) { 'use strict';
       }
     }]
   }), 'GET');
-  workbox.registerRoute(/.*/i, new workbox.NetworkOnly({
+  registerRoute_mjs.registerRoute(/.*/i, new NetworkOnly_mjs.NetworkOnly({
     "cacheName": "dev",
     plugins: []
   }), 'GET');

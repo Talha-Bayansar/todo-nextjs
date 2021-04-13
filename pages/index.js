@@ -2,18 +2,13 @@ import axios from "axios";
 import Head from "next/head";
 import { TaskCard } from "../components/TaskCard";
 import { parseCookies } from "nookies";
-import { useTask } from "../contexts/useTask";
 import moment from "moment";
-import { useAuth } from "../contexts/useAuth";
 
 export default function Home({ tasks }) {
-    const { todayTasks, setTodayTasks } = useTask();
-
     return (
         <div className="flex flex-col items-center">
             <Head>
-                <title>Home</title>
-                <link rel="icon" href="/favicon.ico" />
+                <title>StartPagina</title>
             </Head>
             <h1 className="text-4xl border-t-2 border-b-2 w-min py-2 p-6">
                 Vandaag

@@ -7,7 +7,6 @@ export function TaskProvider(props) {
     const [taskToDelete, setTaskToDelete] = useState({});
     const [isDelete, setIsDelete] = useState(false);
     const [allTasks, setAllTasks] = useState([]);
-    const [todayTasks, setTodayTasks] = useState([]);
 
     function addTask(task) {
         setAllTasks([...allTasks, task]);
@@ -36,8 +35,6 @@ export function TaskProvider(props) {
         setTaskToDelete,
         allTasks,
         setAllTasks,
-        todayTasks,
-        setTodayTasks,
         addTask,
         deleteTask,
         updateTask,

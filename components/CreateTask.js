@@ -3,9 +3,11 @@ import moment from "moment";
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
 import { useTask } from "../contexts/useTask";
+import { useAuth } from "../contexts/useAuth";
 
 export const CreateTask = ({ setIsVisible }) => {
     const { allTasks, addTask } = useTask();
+    const { user } = useAuth();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState(
@@ -14,18 +16,12 @@ export const CreateTask = ({ setIsVisible }) => {
     const [time, setTime] = useState(
         `${moment().locale("nl-be").format("LT")}:00.000`
     );
-    const [dateTime, setDateTime] = useState(moment(date + " " + time));
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const jwt = parseCookies().jwt;
 
         if (title !== "" && description !== "") {
-            console.log(
-                `CREATE TASK:\ntitle: ${title}\ndescription: ${description}\ndate: ${date}\ntime: ${time}\ndate&time:${dateTime
-                    .locale("nl-be")
-                    .format("L")} - ${dateTime.locale("nl-be").format("LT")}`
-            );
             const { data } = await axios.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/tasks`,
                 {
@@ -34,6 +30,7 @@ export const CreateTask = ({ setIsVisible }) => {
                     date: date,
                     time: time,
                     isChecked: false,
+                    uid: user.id,
                 },
                 {
                     headers: {
@@ -90,9 +87,6 @@ export const CreateTask = ({ setIsVisible }) => {
                             name="date"
                             onChange={(e) => {
                                 setDate(e.target.value);
-                                setDateTime(
-                                    moment(e.target.value + " " + time)
-                                );
                             }}
                             value={date}
                         />
@@ -105,9 +99,6 @@ export const CreateTask = ({ setIsVisible }) => {
                             name="time"
                             onChange={(e) => {
                                 setTime(`${e.target.value}:00.000`);
-                                setDateTime(
-                                    moment(date + " " + e.target.value)
-                                );
                             }}
                             value={time}
                         />

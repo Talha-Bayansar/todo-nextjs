@@ -4,6 +4,7 @@ import { TaskCard } from "../components/TaskCard";
 import { parseCookies } from "nookies";
 import { useTask } from "../contexts/useTask";
 import moment from "moment";
+import { useAuth } from "../contexts/useAuth";
 
 export default function Home({ tasks }) {
     const { todayTasks, setTodayTasks } = useTask();
@@ -35,6 +36,7 @@ export default function Home({ tasks }) {
 
 export async function getServerSideProps(context) {
     const jwt = parseCookies(context).jwt;
+    const userId = JSON.parse(parseCookies(context).user).id;
     const now = moment();
 
     if (!jwt) {
@@ -44,7 +46,9 @@ export async function getServerSideProps(context) {
     }
 
     const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/tasks?date_eq=${now.format(
+        `${
+            process.env.NEXT_PUBLIC_API_URL
+        }/tasks?uid_eq=${userId}&date_eq=${now.format(
             "YYYY-MM-DD"
         )}&_sort=time:ASC`,
         {

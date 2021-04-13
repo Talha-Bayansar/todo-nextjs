@@ -2,10 +2,12 @@ import axios from "axios";
 import moment from "moment";
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
+import { useAuth } from "../contexts/useAuth";
 import { useTask } from "../contexts/useTask";
 
 export const EditTask = ({ setEdit }) => {
     const { taskToEdit, setTaskToEdit, updateTask } = useTask();
+    const { user } = useAuth();
     const [title, setTitle] = useState(taskToEdit.title);
     const [description, setDescription] = useState(taskToEdit.description);
     const [date, setDate] = useState(
@@ -16,40 +18,34 @@ export const EditTask = ({ setEdit }) => {
             .locale("nl-be")
             .format("LT")}:00.000`
     );
-    const [dateTime, setDateTime] = useState(moment(date + " " + time));
-
-    console.log(taskToEdit.date);
-    console.log(taskToEdit.time);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const jwt = parseCookies().jwt;
-        if (title !== "" && description !== "") {
-            console.log(
-                `EDIT TASK:\ntitle: ${title}\ndescription: ${description}\ndate: ${date}\ntime: ${time}\ndate&time:${dateTime
-                    .locale("nl-be")
-                    .format("L")} - ${dateTime.locale("nl-be").format("LT")}`
-            );
-            await axios
-                .put(
-                    `${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskToEdit.id}`,
-                    {
-                        title: title,
-                        description: description,
-                        date: date,
-                        time: time,
-                    },
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${jwt}`,
+        if (taskToEdit.uid === user.id) {
+            if (title !== "" && description !== "") {
+                await axios
+                    .put(
+                        `${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskToEdit.id}`,
+                        {
+                            title: title,
+                            description: description,
+                            date: date,
+                            time: time,
                         },
-                    }
-                )
-                .then(({ data }) => updateTask(data));
-            setTaskToEdit({});
-            setEdit(false);
+                        {
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${jwt}`,
+                            },
+                        }
+                    )
+                    .then(({ data }) => updateTask(data));
+            }
         }
+
+        setTaskToEdit({});
+        setEdit(false);
     };
     return (
         <div className="flex items-center justify-center fixed top-0 left-0 h-screen w-screen z-20 shadow-md">
@@ -94,9 +90,6 @@ export const EditTask = ({ setEdit }) => {
                             name="date"
                             onChange={(e) => {
                                 setDate(e.target.value);
-                                setDateTime(
-                                    moment(e.target.value + " " + time)
-                                );
                             }}
                             value={date}
                         />
@@ -109,9 +102,6 @@ export const EditTask = ({ setEdit }) => {
                             name="time"
                             onChange={(e) => {
                                 setTime(`${e.target.value}:00.000`);
-                                setDateTime(
-                                    moment(date + " " + e.target.value)
-                                );
                             }}
                             value={time}
                         />

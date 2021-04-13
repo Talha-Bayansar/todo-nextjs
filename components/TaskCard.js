@@ -7,14 +7,14 @@ import moment from "moment";
 import { useTask } from "../contexts/useTask";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import { useAuth } from "../contexts/useAuth";
 
 export const TaskCard = ({ task, setEdit }) => {
     const { setTaskToEdit, setIsDelete, setTaskToDelete } = useTask();
+    const { user } = useAuth();
     const [checked, setChecked] = useState(task.isChecked);
 
     const checkTodo = async () => {
-        console.log("CHECK TASK");
-
         const jwt = parseCookies().jwt;
 
         await axios.put(
@@ -32,7 +32,9 @@ export const TaskCard = ({ task, setEdit }) => {
     };
 
     useEffect(() => {
-        checkTodo();
+        if (task.uid === user.id) {
+            checkTodo();
+        }
     }, [checked]);
     return (
         <div

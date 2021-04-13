@@ -49,6 +49,7 @@ const Tasks = ({ tasks }) => {
 
 export async function getServerSideProps(context) {
     const jwt = parseCookies(context).jwt;
+    const userId = JSON.parse(parseCookies(context).user).id;
 
     if (!jwt) {
         context.res.setHeader("location", "/login");
@@ -57,7 +58,7 @@ export async function getServerSideProps(context) {
     }
 
     const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/tasks?_sort=date:ASC,time:ASC`,
+        `${process.env.NEXT_PUBLIC_API_URL}/tasks?uid_eq=${userId}&_sort=date:ASC,time:ASC`,
         {
             headers: {
                 Authorization: `Bearer ${jwt}`,

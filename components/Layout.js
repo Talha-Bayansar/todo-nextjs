@@ -1,5 +1,5 @@
 import React from "react";
-import TopBar from "./navigation/topBar";
+import TopBar from "./navigation/TopBar";
 import BottomBar from "./navigation/BottomBar";
 import { useAuth } from "../contexts/useAuth";
 import LogoutModal from "./LogoutModal";

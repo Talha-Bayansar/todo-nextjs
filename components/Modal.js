@@ -1,24 +1,21 @@
 import axios from "axios";
 import { parseCookies } from "nookies";
 import React from "react";
+import { mutate } from "swr";
 import { useAuth } from "../contexts/useAuth";
 import { useTask } from "../contexts/useTask";
 
 const Modal = () => {
-    const {
-        setIsDelete,
-        setTaskToDelete,
-        taskToDelete,
-        deleteTask,
-    } = useTask();
+    const { setIsDelete, setTaskToDelete, taskToDelete } = useTask();
 
     const { user } = useAuth();
 
     const handleDelete = async () => {
         const jwt = parseCookies().jwt;
+        const userId = parseCookies().userId;
 
         if (taskToDelete.uid === user.id) {
-            const { data } = await axios.delete(
+            await axios.delete(
                 `${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskToDelete.id}`,
                 {
                     headers: {
@@ -26,7 +23,9 @@ const Modal = () => {
                     },
                 }
             );
-            deleteTask(data);
+            mutate(
+                `${process.env.NEXT_PUBLIC_API_URL}/tasks?uid_eq=${userId}&_sort=date:ASC,time:ASC`
+            );
         }
 
         setIsDelete(false);

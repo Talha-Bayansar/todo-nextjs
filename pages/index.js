@@ -3,39 +3,38 @@ import Head from "next/head";
 import { TaskCard } from "../components/TaskCard";
 import { parseCookies } from "nookies";
 import moment from "moment";
-import useSWR from "swr";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-
-const fetcher = (url) =>
-    axios
-        .get(url, {
-            headers: {
-                Authorization: `Bearer ${parseCookies().jwt}`,
-            },
-        })
-        .then((res) => res.data);
+import { useEffect, useState } from "react";
 
 export default function Home() {
     const jwt = parseCookies().jwt;
     const userId = parseCookies().userId;
     const now = moment();
     const router = useRouter();
+    const [data, setData] = useState();
+    const [error, setError] = useState();
 
     useEffect(() => {
         if (!jwt) {
             router.push("/login");
         }
-    }, []);
 
-    const { data, error } = useSWR(
-        `${
-            process.env.NEXT_PUBLIC_API_URL
-        }/tasks?uid_eq=${userId}&date_eq=${now.format(
-            "YYYY-MM-DD"
-        )}&_sort=time:ASC`,
-        fetcher
-    );
+        axios
+            .get(
+                `${
+                    process.env.NEXT_PUBLIC_API_URL
+                }/tasks?uid_eq=${userId}&date_eq=${now.format(
+                    "YYYY-MM-DD"
+                )}&_sort=time:ASC`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
+                    },
+                }
+            )
+            .then((res) => setData(res.data))
+            .catch((err) => setError(err));
+    }, []);
 
     if (error) return "Something went wrong!";
     if (!data) return "Loading...";

@@ -8,14 +8,43 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 import { useTask } from "../../contexts/useTask";
 import Modal from "../../components/Modal";
+import { useRouter } from "next/router";
+import useSWR from "swr";
 
-const Tasks = ({ tasks }) => {
+const fetcher = (url) =>
+    axios
+        .get(url, {
+            headers: {
+                Authorization: `Bearer ${parseCookies().jwt}`,
+            },
+        })
+        .then((res) => res.data);
+
+const Tasks = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [edit, setEdit] = useState(false);
     const { isDelete, allTasks, setAllTasks } = useTask();
+    // useEffect(() => {
+    //     setAllTasks(tasks);
+    // }, []);
+
+    const jwt = parseCookies().jwt;
+    const userId = parseCookies().userId;
+    const router = useRouter();
+
     useEffect(() => {
-        setAllTasks(tasks);
+        if (!jwt) {
+            router.push("/login");
+        }
     }, []);
+
+    const { data, error } = useSWR(
+        `${process.env.NEXT_PUBLIC_API_URL}/tasks?uid_eq=${userId}&_sort=date:ASC,time:ASC`,
+        fetcher
+    );
+
+    if (error) return "Something went wrong!";
+    if (!data) return "Loading...";
 
     return (
         <div className="flex flex-col items-center">
@@ -32,8 +61,8 @@ const Tasks = ({ tasks }) => {
                 <Add />
             </button>
             <div className="flex flex-wrap justify-center mt-5">
-                {allTasks.length > 0 ? (
-                    allTasks.map((task) => (
+                {data.length > 0 ? (
+                    data.map((task) => (
                         <TaskCard key={task.id} task={task} setEdit={setEdit} />
                     ))
                 ) : (
@@ -47,30 +76,30 @@ const Tasks = ({ tasks }) => {
     );
 };
 
-export async function getServerSideProps(context) {
-    const jwt = parseCookies(context).jwt;
-    const userId = parseCookies(context).userId;
+// export async function getServerSideProps(context) {
+//     const jwt = parseCookies(context).jwt;
+//     const userId = parseCookies(context).userId;
 
-    if (!jwt) {
-        context.res.setHeader("location", "/login");
-        context.res.statusCode = 302;
-        context.res.end();
-    }
+//     if (!jwt) {
+//         context.res.setHeader("location", "/login");
+//         context.res.statusCode = 302;
+//         context.res.end();
+//     }
 
-    const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/tasks?uid_eq=${userId}&_sort=date:ASC,time:ASC`,
-        {
-            headers: {
-                Authorization: `Bearer ${jwt}`,
-            },
-        }
-    );
+//     const { data } = await axios.get(
+//         `${process.env.NEXT_PUBLIC_API_URL}/tasks?uid_eq=${userId}&_sort=date:ASC,time:ASC`,
+//         {
+//             headers: {
+//                 Authorization: `Bearer ${jwt}`,
+//             },
+//         }
+//     );
 
-    return {
-        props: {
-            tasks: data,
-        },
-    };
-}
+//     return {
+//         props: {
+//             tasks: data,
+//         },
+//     };
+// }
 
 export default Tasks;

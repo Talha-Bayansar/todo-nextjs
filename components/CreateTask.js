@@ -2,11 +2,10 @@ import axios from "axios";
 import moment from "moment";
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
-import { useTask } from "../contexts/useTask";
 import { useAuth } from "../contexts/useAuth";
+import { mutate } from "swr";
 
 export const CreateTask = ({ setIsVisible }) => {
-    const { allTasks, addTask } = useTask();
     const { user } = useAuth();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -20,9 +19,10 @@ export const CreateTask = ({ setIsVisible }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const jwt = parseCookies().jwt;
+        const userId = parseCookies().userId;
 
         if (title !== "" && description !== "") {
-            const { data } = await axios.post(
+            await axios.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/tasks`,
                 {
                     title: title,
@@ -38,8 +38,9 @@ export const CreateTask = ({ setIsVisible }) => {
                     },
                 }
             );
-            addTask(data);
-            console.log([...allTasks, data]);
+            mutate(
+                `${process.env.NEXT_PUBLIC_API_URL}/tasks?uid_eq=${userId}&_sort=date:ASC,time:ASC`
+            );
             setTitle("");
             setDescription("");
             setDate("");

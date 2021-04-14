@@ -7,20 +7,20 @@ import moment from "moment";
 import { useTask } from "../contexts/useTask";
 import axios from "axios";
 import { parseCookies } from "nookies";
-import { useAuth } from "../contexts/useAuth";
+import { mutate } from "swr";
 
 export const TaskCard = ({ task, setEdit }) => {
     const { setTaskToEdit, setIsDelete, setTaskToDelete } = useTask();
-    const { user } = useAuth();
     const [checked, setChecked] = useState(task.isChecked);
 
-    const checkTodo = async () => {
+    const checkTodo = async (value) => {
         const jwt = parseCookies().jwt;
+        const userId = parseCookies().userId;
 
         await axios.put(
             `${process.env.NEXT_PUBLIC_API_URL}/tasks/${task.id}`,
             {
-                isChecked: checked,
+                isChecked: value,
             },
             {
                 headers: {
@@ -29,13 +29,10 @@ export const TaskCard = ({ task, setEdit }) => {
                 },
             }
         );
+        mutate(
+            `${process.env.NEXT_PUBLIC_API_URL}/tasks?uid_eq=${userId}&_sort=date:ASC,time:ASC`
+        );
     };
-
-    useEffect(() => {
-        if (task.uid === user.id) {
-            checkTodo();
-        }
-    }, [checked]);
     return (
         <div
             className={`flex rounded-xl bg-gray-100 my-4 md:m-6 max-w-sm p-4 shadow-mat ${
@@ -74,7 +71,10 @@ export const TaskCard = ({ task, setEdit }) => {
 
             <div className="flex flex-col w-min ml-4 justify-start">
                 <button
-                    onClick={() => setChecked(!checked)}
+                    onClick={() => {
+                        setChecked(!checked);
+                        checkTodo(!checked);
+                    }}
                     className="focus:outline-none my-1 outline-none block rounded-full bg-blue-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
                 >
                     <CheckIcon />

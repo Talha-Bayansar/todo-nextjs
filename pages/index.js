@@ -3,8 +3,42 @@ import Head from "next/head";
 import { TaskCard } from "../components/TaskCard";
 import { parseCookies } from "nookies";
 import moment from "moment";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
-export default function Home({ tasks }) {
+export default function Home() {
+    const jwt = parseCookies().jwt;
+    const userId = parseCookies().userId;
+    const now = moment();
+    const router = useRouter();
+    const [data, setData] = useState();
+    const [error, setError] = useState();
+
+    useEffect(() => {
+        if (!jwt) {
+            router.push("/login");
+        }
+
+        axios
+            .get(
+                `${
+                    process.env.NEXT_PUBLIC_API_URL
+                }/tasks?uid_eq=${userId}&date_eq=${now.format(
+                    "YYYY-MM-DD"
+                )}&_sort=time:ASC`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
+                    },
+                }
+            )
+            .then((res) => setData(res.data))
+            .catch((err) => setError(err));
+    }, []);
+
+    if (error) return "Something went wrong!";
+    if (!data) return "Loading...";
+
     return (
         <div className="flex flex-col items-center">
             <Head>
@@ -14,8 +48,8 @@ export default function Home({ tasks }) {
                 Vandaag
             </h1>
             <div className="flex flex-wrap justify-center mt-5">
-                {tasks.length > 0 ? (
-                    tasks.map((task) => <TaskCard key={task.id} task={task} />)
+                {data.length > 0 ? (
+                    data.map((task) => <TaskCard key={task.id} task={task} />)
                 ) : (
                     <p className="block text-center">
                         Je hebt geen taken voor vandaag!
@@ -29,33 +63,35 @@ export default function Home({ tasks }) {
     );
 }
 
-export async function getServerSideProps(context) {
-    const jwt = parseCookies(context).jwt;
-    const userId = parseCookies(context).userId;
-    const now = moment();
+// export async function getStaticProps() {
+//     const jwt = parseCookies().jwt;
+//     const userId = parseCookies().userId;
+//     const now = moment();
 
-    if (!jwt) {
-        context.res.setHeader("location", "/login");
-        context.res.statusCode = 302;
-        context.res.end();
-    }
+//     if (!jwt) {
+//         return {
+//             props: {
+//                 tasks: [],
+//             },
+//         };
+//     }
 
-    const { data } = await axios.get(
-        `${
-            process.env.NEXT_PUBLIC_API_URL
-        }/tasks?uid_eq=${userId}&date_eq=${now.format(
-            "YYYY-MM-DD"
-        )}&_sort=time:ASC`,
-        {
-            headers: {
-                Authorization: `Bearer ${jwt}`,
-            },
-        }
-    );
+//     const { data } = await axios.get(
+//         `${
+//             process.env.NEXT_PUBLIC_API_URL
+//         }/tasks?uid_eq=${userId}&date_eq=${now.format(
+//             "YYYY-MM-DD"
+//         )}&_sort=time:ASC`,
+//         {
+//             headers: {
+//                 Authorization: `Bearer ${jwt}`,
+//             },
+//         }
+//     );
 
-    return {
-        props: {
-            tasks: data,
-        },
-    };
-}
+//     return {
+//         props: {
+//             tasks: data,
+//         },
+//     };
+// }

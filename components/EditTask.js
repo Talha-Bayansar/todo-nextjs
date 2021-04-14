@@ -2,6 +2,7 @@ import axios from "axios";
 import moment from "moment";
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
+import { mutate } from "swr";
 import { useAuth } from "../contexts/useAuth";
 import { useTask } from "../contexts/useTask";
 
@@ -22,25 +23,28 @@ export const EditTask = ({ setEdit }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const jwt = parseCookies().jwt;
+        const userId = parseCookies().userId;
+
         if (taskToEdit.uid === user.id) {
             if (title !== "" && description !== "") {
-                await axios
-                    .put(
-                        `${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskToEdit.id}`,
-                        {
-                            title: title,
-                            description: description,
-                            date: date,
-                            time: time,
+                await axios.put(
+                    `${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskToEdit.id}`,
+                    {
+                        title: title,
+                        description: description,
+                        date: date,
+                        time: time,
+                    },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${jwt}`,
                         },
-                        {
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: `Bearer ${jwt}`,
-                            },
-                        }
-                    )
-                    .then(({ data }) => updateTask(data));
+                    }
+                );
+                mutate(
+                    `${process.env.NEXT_PUBLIC_API_URL}/tasks?uid_eq=${userId}&_sort=date:ASC,time:ASC`
+                );
             }
         }
 

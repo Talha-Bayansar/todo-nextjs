@@ -17,7 +17,8 @@
     "nookies": "^2.5.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-read-more-read-less": "^1.0.7"
+    "react-read-more-read-less": "^1.0.7",
+    "swr": "^0.5.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.5",

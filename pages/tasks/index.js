@@ -11,6 +11,7 @@ import Modal from "../../components/Modal";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { motion } from "framer-motion";
+import Loader from "react-loader-spinner";
 
 const fetcher = (url) =>
     axios
@@ -67,7 +68,18 @@ const Tasks = () => {
     );
 
     if (error) return "Something went wrong!";
-    if (!data) return "Loading...";
+    if (!data)
+        return (
+            <div className="absolute top-1/2 left-1/2 translate-x-1/2 translate-y-1/2">
+                <Loader
+                    type="TailSpin"
+                    color="#00BFFF"
+                    height={50}
+                    width={50}
+                    timeout={3000}
+                />
+            </div>
+        );
 
     return (
         <motion.div

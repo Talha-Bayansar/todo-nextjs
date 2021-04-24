@@ -37,6 +37,24 @@ const Tasks = () => {
         visible: { opacity: 1 },
     };
 
+    const containerVar = {
+        start: {},
+        end: {
+            transition: {
+                staggerChildren: 0.05,
+            },
+        },
+    };
+
+    const taskVar = {
+        start: {
+            opacity: 0,
+        },
+        end: {
+            opacity: 1,
+        },
+    };
+
     useEffect(() => {
         if (!jwt) {
             router.push("/login");
@@ -70,15 +88,22 @@ const Tasks = () => {
             >
                 <Add />
             </button>
-            <div className="flex flex-wrap justify-center mt-5">
+            <motion.div
+                variants={containerVar}
+                initial="start"
+                animate="end"
+                className="flex flex-wrap justify-center mt-5"
+            >
                 {data.length > 0 ? (
                     data.map((task) => (
-                        <TaskCard key={task.id} task={task} setEdit={setEdit} />
+                        <motion.div key={task.id} variants={taskVar}>
+                            <TaskCard task={task} setEdit={setEdit} />
+                        </motion.div>
                     ))
                 ) : (
                     <p className="block text-center">Je hebt geen taken.</p>
                 )}
-            </div>
+            </motion.div>
             {isVisible && <CreateTask setIsVisible={setIsVisible} />}
             {edit && <EditTask setEdit={setEdit} />}
             {isDelete && <Modal />}

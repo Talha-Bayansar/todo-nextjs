@@ -4,6 +4,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { useAuth } from "../../contexts/useAuth";
+import { motion } from "framer-motion";
 
 const BottomBar = () => {
     const { setIsLogout, user } = useAuth();
@@ -15,21 +16,28 @@ const BottomBar = () => {
             {user.username && (
                 <>
                     <Link href="/">
-                        <a className="flex items-center hover:bg-gray-300 active:bg-gray-300 p-4 rounded-full">
+                        <motion.a
+                            whileTap={{ scale: 0.8 }}
+                            className="flex items-center hover:bg-gray-300 active:bg-gray-300 p-4 rounded-full"
+                        >
                             <HomeIcon />
-                        </a>
+                        </motion.a>
                     </Link>
                     <Link href="/tasks">
-                        <a className="flex items-center hover:bg-gray-300 active:bg-gray-300 p-4 rounded-full">
+                        <motion.a
+                            whileTap={{ scale: 0.8 }}
+                            className="flex items-center hover:bg-gray-300 active:bg-gray-300 p-4 rounded-full"
+                        >
                             <AssignmentTurnedInIcon />
-                        </a>
+                        </motion.a>
                     </Link>
-                    <a
+                    <motion.a
+                        whileTap={{ scale: 0.8 }}
                         onClick={() => setIsLogout(true)}
                         className="flex items-center hover:bg-gray-300 active:bg-gray-300 p-4 rounded-full"
                     >
                         <ExitToAppIcon />
-                    </a>
+                    </motion.a>
                 </>
             )}
         </nav>

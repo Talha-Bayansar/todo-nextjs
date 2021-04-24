@@ -6,6 +6,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Image from "next/image";
 import { useAuth } from "../../contexts/useAuth";
 import moment from "moment";
+import { motion } from "framer-motion";
 
 const TopBar = () => {
     const { user, setIsLogout } = useAuth();
@@ -16,21 +17,28 @@ const TopBar = () => {
             {user.username && (
                 <div className="hidden sm:flex sm:justify-evenly sm:flex-grow sm:w-auto">
                     <Link href="/">
-                        <a className="flex items-center hover:bg-gray-300 active:bg-gray-300 p-4 rounded-full">
+                        <motion.a
+                            whileTap={{ scale: 0.8 }}
+                            className="flex items-center hover:bg-gray-300 p-4 rounded-full"
+                        >
                             <HomeIcon />
-                        </a>
+                        </motion.a>
                     </Link>
                     <Link href="/tasks">
-                        <a className="flex items-center hover:bg-gray-300 active:bg-gray-300 p-4 rounded-full">
+                        <motion.a
+                            whileTap={{ scale: 0.8 }}
+                            className="flex items-center hover:bg-gray-300 p-4 rounded-full"
+                        >
                             <AssignmentTurnedInIcon />
-                        </a>
+                        </motion.a>
                     </Link>
-                    <a
+                    <motion.a
+                        whileTap={{ scale: 0.8 }}
                         onClick={() => setIsLogout(true)}
                         className="flex items-center hover:bg-gray-300 active:bg-gray-300 p-4 rounded-full"
                     >
                         <ExitToAppIcon />
-                    </a>
+                    </motion.a>
                 </div>
             )}
             <span className="flex items-center text-blue-600 font-bold">

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { motion } from "framer-motion";
 import moment from "moment";
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
@@ -19,6 +20,15 @@ export const EditTask = ({ setEdit }) => {
             .locale("nl-be")
             .format("LT")}:00.000`
     );
+
+    const formVar = {
+        hidden: {
+            scale: 0,
+        },
+        visible: {
+            scale: 1,
+        },
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -60,10 +70,13 @@ export const EditTask = ({ setEdit }) => {
                 }}
                 className="w-full h-full bg-black opacity-50"
             />
-            <form
+            <motion.form
+                initial="hidden"
+                animate="visible"
+                variants={formVar}
                 autoComplete="off"
                 onSubmit={(e) => handleSubmit(e)}
-                className="animate-grow absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
+                className="absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
             >
                 <div className="flex flex-col my-2">
                     <label htmlFor="title">Titel</label>
@@ -118,7 +131,7 @@ export const EditTask = ({ setEdit }) => {
                 >
                     Taak aanmaken
                 </button>
-            </form>
+            </motion.form>
         </div>
     );
 };

@@ -30,15 +30,6 @@ export default function Home() {
         },
     };
 
-    const taskVar = {
-        start: {
-            opacity: 0,
-        },
-        end: {
-            opacity: 1,
-        },
-    };
-
     useEffect(() => {
         if (!jwt) {
             router.push("/login");
@@ -95,11 +86,7 @@ export default function Home() {
                 className="flex flex-wrap justify-center mt-5"
             >
                 {data.length > 0 ? (
-                    data.map((task) => (
-                        <motion.div key={task.id} variants={taskVar}>
-                            <TaskCard task={task} />
-                        </motion.div>
-                    ))
+                    data.map((task) => <TaskCard key={task.id} task={task} />)
                 ) : (
                     <p className="block text-center">
                         Je hebt geen taken voor vandaag!

@@ -10,7 +10,7 @@ import { useTask } from "../../contexts/useTask";
 import Modal from "../../components/Modal";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Loader from "react-loader-spinner";
 
 const fetcher = (url) =>
@@ -25,10 +25,7 @@ const fetcher = (url) =>
 const Tasks = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [edit, setEdit] = useState(false);
-    const { isDelete, allTasks, setAllTasks } = useTask();
-    // useEffect(() => {
-    //     setAllTasks(tasks);
-    // }, []);
+    const { isDelete } = useTask();
 
     const jwt = parseCookies().jwt;
     const userId = parseCookies().userId;
@@ -44,15 +41,6 @@ const Tasks = () => {
             transition: {
                 staggerChildren: 0.05,
             },
-        },
-    };
-
-    const taskVar = {
-        start: {
-            opacity: 0,
-        },
-        end: {
-            opacity: 1,
         },
     };
 
@@ -106,15 +94,19 @@ const Tasks = () => {
                 animate="end"
                 className="flex flex-wrap justify-center mt-5"
             >
-                {data.length > 0 ? (
-                    data.map((task) => (
-                        <motion.div key={task.id} variants={taskVar}>
-                            <TaskCard task={task} setEdit={setEdit} />
-                        </motion.div>
-                    ))
-                ) : (
-                    <p className="block text-center">Je hebt geen taken.</p>
-                )}
+                <AnimatePresence>
+                    {data.length > 0 ? (
+                        data.map((task) => (
+                            <TaskCard
+                                key={task.id}
+                                task={task}
+                                setEdit={setEdit}
+                            />
+                        ))
+                    ) : (
+                        <p className="block text-center">Je hebt geen taken.</p>
+                    )}
+                </AnimatePresence>
             </motion.div>
             {isVisible && <CreateTask setIsVisible={setIsVisible} />}
             {edit && <EditTask setEdit={setEdit} />}

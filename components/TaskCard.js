@@ -8,6 +8,7 @@ import { useTask } from "../contexts/useTask";
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { mutate } from "swr";
+import { motion } from "framer-motion";
 
 export const TaskCard = ({ task, setEdit }) => {
     const { setTaskToEdit, setIsDelete, setTaskToDelete } = useTask();
@@ -34,7 +35,10 @@ export const TaskCard = ({ task, setEdit }) => {
         );
     };
     return (
-        <div
+        <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ opacity: 0, scale: 0.3 }}
             className={`flex rounded-xl bg-gray-100 my-4 md:m-6 max-w-sm p-4 shadow-mat ${
                 checked && "opacity-50"
             }`}
@@ -103,6 +107,6 @@ export const TaskCard = ({ task, setEdit }) => {
                     </>
                 )}
             </div>
-        </div>
+        </motion.div>
     );
 };

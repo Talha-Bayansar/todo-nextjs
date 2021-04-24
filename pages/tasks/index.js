@@ -10,6 +10,7 @@ import { useTask } from "../../contexts/useTask";
 import Modal from "../../components/Modal";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { motion } from "framer-motion";
 
 const fetcher = (url) =>
     axios
@@ -31,6 +32,10 @@ const Tasks = () => {
     const jwt = parseCookies().jwt;
     const userId = parseCookies().userId;
     const router = useRouter();
+    const variants = {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1 },
+    };
 
     useEffect(() => {
         if (!jwt) {
@@ -47,7 +52,12 @@ const Tasks = () => {
     if (!data) return "Loading...";
 
     return (
-        <div className="flex flex-col items-center">
+        <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={variants}
+            className="flex flex-col items-center"
+        >
             <Head>
                 <title>Taken</title>
             </Head>
@@ -72,7 +82,7 @@ const Tasks = () => {
             {isVisible && <CreateTask setIsVisible={setIsVisible} />}
             {edit && <EditTask setEdit={setEdit} />}
             {isDelete && <Modal />}
-        </div>
+        </motion.div>
     );
 };
 

@@ -5,6 +5,7 @@ import { parseCookies } from "nookies";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Home() {
     const jwt = parseCookies().jwt;
@@ -13,6 +14,10 @@ export default function Home() {
     const router = useRouter();
     const [data, setData] = useState();
     const [error, setError] = useState();
+    const variants = {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1 },
+    };
 
     useEffect(() => {
         if (!jwt) {
@@ -40,7 +45,12 @@ export default function Home() {
     if (!data) return "Loading...";
 
     return (
-        <div className="flex flex-col items-center">
+        <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={variants}
+            className="flex flex-col items-center"
+        >
             <Head>
                 <title>StartPagina</title>
             </Head>
@@ -59,7 +69,7 @@ export default function Home() {
                     </p>
                 )}
             </div>
-        </div>
+        </motion.div>
     );
 }
 

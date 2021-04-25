@@ -49,13 +49,12 @@ const Tasks = () => {
     if (error) return "Something went wrong!";
     if (!data)
         return (
-            <div className="absolute top-1/2 left-1/2 translate-x-1/2 translate-y-1/2">
+            <div className="absolute top-1/2 left-1/2 -ml-6 -mt-6">
                 <Loader
                     type="TailSpin"
                     color="#00BFFF"
-                    height={50}
-                    width={50}
-                    timeout={3000}
+                    height={48}
+                    width={48}
                 />
             </div>
         );

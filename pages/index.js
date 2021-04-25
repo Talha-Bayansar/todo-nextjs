@@ -5,7 +5,7 @@ import { parseCookies } from "nookies";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Loader from "react-loader-spinner";
 
 export default function Home() {
@@ -19,15 +19,6 @@ export default function Home() {
     const variants = {
         hidden: { opacity: 0 },
         visible: { opacity: 1 },
-    };
-
-    const containerVar = {
-        start: {},
-        end: {
-            transition: {
-                staggerChildren: 0.05,
-            },
-        },
     };
 
     useEffect(() => {
@@ -79,23 +70,22 @@ export default function Home() {
             <h1 className="text-4xl border-t-2 border-b-2 w-min py-2 p-6">
                 Vandaag
             </h1>
-            <motion.div
-                variants={containerVar}
-                initial="start"
-                animate="end"
-                className="flex flex-wrap justify-center mt-5"
-            >
-                {data.length > 0 ? (
-                    data.map((task) => <TaskCard key={task.id} task={task} />)
-                ) : (
-                    <p className="block text-center">
-                        Je hebt geen taken voor vandaag!
-                        <br />
-                        Maak er gebruik van door andere taken af te werken of
-                        geniet van je dag.
-                    </p>
-                )}
-            </motion.div>
+            <div className="flex flex-wrap justify-center mt-5">
+                <AnimatePresence initial={false}>
+                    {data.length > 0 ? (
+                        data.map((task) => (
+                            <TaskCard key={task.id} task={task} />
+                        ))
+                    ) : (
+                        <p className="block text-center">
+                            Je hebt geen taken voor vandaag!
+                            <br />
+                            Maak er gebruik van door andere taken af te werken
+                            of geniet van je dag.
+                        </p>
+                    )}
+                </AnimatePresence>
+            </div>
         </motion.div>
     );
 }

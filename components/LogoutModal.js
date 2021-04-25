@@ -28,18 +28,20 @@ const LogoutModal = () => {
                     Ben je zeker dat je wilt uitloggen?
                 </div>
                 <div className="flex justify-end">
-                    <button
+                    <motion.button
+                        whileTap={{ scale: 0.9 }}
                         onClick={() => setIsLogout(false)}
                         className="focus:outline-none block font-bold text-white bg-red-500 rounded-sm p-1 m-1 hover:bg-red-400"
                     >
                         Cancel
-                    </button>
-                    <button
+                    </motion.button>
+                    <motion.button
+                        whileTap={{ scale: 0.9 }}
                         onClick={handleLogout}
                         className="focus:outline-none block font-bold text-white bg-blue-500 rounded-sm p-1 m-1 hover:bg-blue-400"
                     >
                         Logout
-                    </button>
+                    </motion.button>
                 </div>
             </motion.div>
         </div>

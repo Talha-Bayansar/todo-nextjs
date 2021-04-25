@@ -49,18 +49,20 @@ const Modal = () => {
                     Ben je zeker dat je deze taak wilt verwijderen?
                 </div>
                 <div className="flex justify-end">
-                    <button
+                    <motion.button
+                        whileTap={{ scale: 0.9 }}
                         onClick={() => setIsDelete(false)}
                         className="focus:outline-none block font-bold text-white bg-blue-500 rounded-sm p-1 m-1 hover:bg-blue-400"
                     >
                         Cancel
-                    </button>
-                    <button
+                    </motion.button>
+                    <motion.button
+                        whileTap={{ scale: 0.9 }}
                         onClick={handleDelete}
                         className="focus:outline-none block font-bold text-white bg-red-500 rounded-sm p-1 m-1 hover:bg-red-400"
                     >
                         Delete
-                    </button>
+                    </motion.button>
                 </div>
             </motion.div>
         </div>

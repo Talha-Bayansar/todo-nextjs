@@ -35,15 +35,6 @@ const Tasks = () => {
         visible: { opacity: 1 },
     };
 
-    const containerVar = {
-        start: {},
-        end: {
-            transition: {
-                staggerChildren: 0.05,
-            },
-        },
-    };
-
     useEffect(() => {
         if (!jwt) {
             router.push("/login");
@@ -89,13 +80,8 @@ const Tasks = () => {
             >
                 <Add />
             </motion.button>
-            <motion.div
-                variants={containerVar}
-                initial="start"
-                animate="end"
-                className="flex flex-wrap justify-center mt-5"
-            >
-                <AnimatePresence>
+            <div className="flex flex-wrap justify-center mt-5">
+                <AnimatePresence initial={false}>
                     {data.length > 0 ? (
                         data.map((task) => (
                             <TaskCard
@@ -108,7 +94,7 @@ const Tasks = () => {
                         <p className="block text-center">Je hebt geen taken.</p>
                     )}
                 </AnimatePresence>
-            </motion.div>
+            </div>
             <AnimatePresence>
                 {isVisible && <CreateTask setIsVisible={setIsVisible} />}
                 {edit && <EditTask setEdit={setEdit} />}

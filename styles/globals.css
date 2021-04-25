@@ -29,7 +29,7 @@ a {
 @layer utilities {
     @variants responsive {
         .max-w-50 {
-            max-width: 50vw;
+            max-width: 80vw;
         }
     }
 }

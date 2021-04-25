@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import Head from "next/head";
 import React, { useState } from "react";
 import { useAuth } from "../contexts/useAuth";
@@ -11,7 +12,7 @@ const Login = () => {
         signIn(email, password);
     };
     return (
-        <>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <Head>
                 <title>Login</title>
             </Head>
@@ -38,18 +39,21 @@ const Login = () => {
                             value={password}
                         />
                     </div>
-                    <button
+                    <motion.button
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        whileTap={{ scale: 0.9 }}
                         type="submit"
                         className="bg-gray-400 mt-4 rounded-md py-2 text-white font-bold shadow-mat focus:outline-none active:shadow-none hover:shadow-none"
                     >
                         Login
-                    </button>
+                    </motion.button>
                     {errorMessage && (
                         <p className="block text-red-600">{errorMessage}</p>
                     )}
                 </form>
             </div>
-        </>
+        </motion.div>
     );
 };
 

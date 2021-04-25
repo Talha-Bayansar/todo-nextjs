@@ -21,7 +21,7 @@ const LogoutModal = () => {
             <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                exit={{ scale: 0 }}
+                exit={{ scaleX: 0 }}
                 className="max-w-50 absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
             >
                 <div className="block mb-2">

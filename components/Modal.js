@@ -42,7 +42,7 @@ const Modal = () => {
             <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                exit={{ scale: 0 }}
+                exit={{ scaleX: 0 }}
                 className="absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md max-w-50"
             >
                 <div className="block mb-2">

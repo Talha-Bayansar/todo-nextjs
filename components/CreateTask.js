@@ -27,8 +27,7 @@ export const CreateTask = ({ setIsVisible }) => {
             opacity: 1,
         },
         removed: {
-            scale: 0,
-            opacity: 0,
+            scaleX: 0,
         },
     };
 

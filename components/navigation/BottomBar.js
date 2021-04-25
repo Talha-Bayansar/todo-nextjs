@@ -18,7 +18,7 @@ const BottomBar = () => {
                     <Link href="/">
                         <motion.a
                             whileTap={{ scale: 0.8 }}
-                            className="flex items-center hover:bg-gray-300 p-4 rounded-full"
+                            className="flex items-center p-4 rounded-full"
                         >
                             <HomeIcon />
                         </motion.a>
@@ -26,7 +26,7 @@ const BottomBar = () => {
                     <Link href="/tasks">
                         <motion.a
                             whileTap={{ scale: 0.8 }}
-                            className="flex items-center hover:bg-gray-300 p-4 rounded-full"
+                            className="flex items-center p-4 rounded-full"
                         >
                             <AssignmentTurnedInIcon />
                         </motion.a>
@@ -34,7 +34,7 @@ const BottomBar = () => {
                     <motion.a
                         whileTap={{ scale: 0.8 }}
                         onClick={() => setIsLogout(true)}
-                        className="flex items-center hover:bg-gray-300 active:bg-gray-300 p-4 rounded-full"
+                        className="flex items-center p-4 rounded-full"
                     >
                         <ExitToAppIcon />
                     </motion.a>

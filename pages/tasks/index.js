@@ -80,14 +80,15 @@ const Tasks = () => {
                 <title>Taken</title>
             </Head>
             <h1 className="relative text-5xl">Taken</h1>
-            <button
+            <motion.button
+                whileTap={{ scale: 0.9 }}
                 onClick={() => {
                     setIsVisible(true);
                 }}
-                className="focus:outline-none outline-none fixed bottom-28 right-4 text-white rounded-full bg-blue-500 p-2 shadow-mat hover:bg-blue-400 active:bg-blue-400 z-10"
+                className="focus:outline-none outline-none fixed bottom-28 right-4 text-white rounded-full bg-blue-500 p-2 shadow-mat hover:bg-blue-400 z-10"
             >
                 <Add />
-            </button>
+            </motion.button>
             <motion.div
                 variants={containerVar}
                 initial="start"
@@ -108,37 +109,13 @@ const Tasks = () => {
                     )}
                 </AnimatePresence>
             </motion.div>
-            {isVisible && <CreateTask setIsVisible={setIsVisible} />}
-            {edit && <EditTask setEdit={setEdit} />}
-            {isDelete && <Modal />}
+            <AnimatePresence>
+                {isVisible && <CreateTask setIsVisible={setIsVisible} />}
+                {edit && <EditTask setEdit={setEdit} />}
+                {isDelete && <Modal />}
+            </AnimatePresence>
         </motion.div>
     );
 };
-
-// export async function getServerSideProps(context) {
-//     const jwt = parseCookies(context).jwt;
-//     const userId = parseCookies(context).userId;
-
-//     if (!jwt) {
-//         context.res.setHeader("location", "/login");
-//         context.res.statusCode = 302;
-//         context.res.end();
-//     }
-
-//     const { data } = await axios.get(
-//         `${process.env.NEXT_PUBLIC_API_URL}/tasks?uid_eq=${userId}&_sort=date:ASC,time:ASC`,
-//         {
-//             headers: {
-//                 Authorization: `Bearer ${jwt}`,
-//             },
-//         }
-//     );
-
-//     return {
-//         props: {
-//             tasks: data,
-//         },
-//     };
-// }
 
 export default Tasks;

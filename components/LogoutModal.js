@@ -1,4 +1,5 @@
 import axios from "axios";
+import { motion } from "framer-motion";
 import { parseCookies } from "nookies";
 import React from "react";
 import { useAuth } from "../contexts/useAuth";
@@ -17,7 +18,12 @@ const LogoutModal = () => {
                 onClick={() => setIsLogout(false)}
                 className="w-full h-full bg-black opacity-50"
             />
-            <div className="animate-grow absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md">
+            <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                className="max-w-50 absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
+            >
                 <div className="block mb-2">
                     Ben je zeker dat je wilt uitloggen?
                 </div>
@@ -35,7 +41,7 @@ const LogoutModal = () => {
                         Logout
                     </button>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };

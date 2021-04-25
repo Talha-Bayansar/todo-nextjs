@@ -3,6 +3,7 @@ import TopBar from "./navigation/TopBar";
 import BottomBar from "./navigation/BottomBar";
 import { useAuth } from "../contexts/useAuth";
 import LogoutModal from "./LogoutModal";
+import { AnimatePresence } from "framer-motion";
 
 export const Layout = ({ children }) => {
     const { isLogout } = useAuth();
@@ -15,7 +16,7 @@ export const Layout = ({ children }) => {
             </div>
 
             <BottomBar />
-            {isLogout && <LogoutModal />}
+            <AnimatePresence>{isLogout && <LogoutModal />}</AnimatePresence>
         </div>
     );
 };

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { motion } from "framer-motion";
 import { parseCookies } from "nookies";
 import React from "react";
 import { mutate } from "swr";
@@ -38,7 +39,12 @@ const Modal = () => {
                 onClick={() => setIsDelete(false)}
                 className="w-full h-full bg-black opacity-50"
             />
-            <div className="animate-grow absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md">
+            <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                className="absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md max-w-50"
+            >
                 <div className="block mb-2">
                     Ben je zeker dat je deze taak wilt verwijderen?
                 </div>
@@ -56,7 +62,7 @@ const Modal = () => {
                         Delete
                     </button>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };

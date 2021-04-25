@@ -74,7 +74,8 @@ export const TaskCard = ({ task, setEdit }) => {
             </div>
 
             <div className="flex flex-col w-min ml-4 justify-start">
-                <button
+                <motion.button
+                    whileTap={{ scale: 0.9 }}
                     onClick={() => {
                         setChecked(!checked);
                         checkTodo(!checked);
@@ -82,10 +83,11 @@ export const TaskCard = ({ task, setEdit }) => {
                     className="focus:outline-none my-1 outline-none block rounded-full bg-blue-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
                 >
                     <CheckIcon />
-                </button>
+                </motion.button>
                 {setEdit && (
                     <>
-                        <button
+                        <motion.button
+                            whileTap={{ scale: 0.9 }}
                             onClick={() => {
                                 setTaskToEdit(task);
                                 setEdit(true);
@@ -93,8 +95,9 @@ export const TaskCard = ({ task, setEdit }) => {
                             className="focus:outline-none my-1 outline-none block rounded-full bg-yellow-600 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
                         >
                             <EditIcon />
-                        </button>
-                        <button
+                        </motion.button>
+                        <motion.button
+                            whileTap={{ scale: 0.9 }}
                             onClick={() => {
                                 setTaskToDelete(task);
                                 setIsDelete(true);
@@ -103,7 +106,7 @@ export const TaskCard = ({ task, setEdit }) => {
                             className="focus:outline-none my-1 outline-none block rounded-full bg-red-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
                         >
                             <DeleteIcon />
-                        </button>
+                        </motion.button>
                     </>
                 )}
             </div>

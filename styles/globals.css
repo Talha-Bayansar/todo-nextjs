@@ -25,3 +25,11 @@ a {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    @variants responsive {
+        .max-w-50 {
+            max-width: 50vw;
+        }
+    }
+}

@@ -20,9 +20,15 @@ export const CreateTask = ({ setIsVisible }) => {
     const formVar = {
         hidden: {
             scale: 0,
+            opacity: 0,
         },
         visible: {
             scale: 1,
+            opacity: 1,
+        },
+        removed: {
+            scale: 0,
+            opacity: 0,
         },
     };
 
@@ -67,6 +73,7 @@ export const CreateTask = ({ setIsVisible }) => {
             <motion.form
                 initial="hidden"
                 animate="visible"
+                exit="removed"
                 variants={formVar}
                 autoComplete="off"
                 onSubmit={(e) => handleSubmit(e)}
@@ -119,12 +126,13 @@ export const CreateTask = ({ setIsVisible }) => {
                     </div>
                 </div>
 
-                <button
+                <motion.button
+                    whileTap={{ scale: 0.9 }}
                     type="submit"
                     className="focus:outline-none shadow-mat outline-none my-2 bg-white rounded-md py-2 hover:bg-green-300 transition-colors"
                 >
                     Taak aanmaken
-                </button>
+                </motion.button>
             </motion.form>
         </div>
     );

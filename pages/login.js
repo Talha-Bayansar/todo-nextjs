@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import Head from "next/head";
 import React, { useState } from "react";
+import Loader from "react-loader-spinner";
 import { useAuth } from "../contexts/useAuth";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { signIn, errorMessage } = useAuth();
+    const { signIn, errorMessage, isLoading } = useAuth();
     const handleSubmit = async (e) => {
         e.preventDefault();
         signIn(email, password);
@@ -50,6 +51,16 @@ const Login = () => {
                     </motion.button>
                     {errorMessage && (
                         <p className="block text-red-600">{errorMessage}</p>
+                    )}
+                    {isLoading && (
+                        <div className="flex justify-center">
+                            <Loader
+                                type="TailSpin"
+                                color="#00BFFF"
+                                height={24}
+                                width={24}
+                            />
+                        </div>
                     )}
                 </form>
             </div>

@@ -9,6 +9,7 @@ export function AuthProvider(props) {
     const [user, setUser] = useState({});
     const [isLogout, setIsLogout] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -21,7 +22,7 @@ export function AuthProvider(props) {
     }, []);
 
     const signIn = async (email, password) => {
-        console.log("LOGIN");
+        setIsLoading(true);
         await axios
             .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/local`, {
                 identifier: email,
@@ -33,15 +34,16 @@ export function AuthProvider(props) {
                 setCookie(null, "user", JSON.stringify(res.data.user));
                 setCookie(null, "userId", res.data.user.id);
                 setErrorMessage(null);
+                setIsLoading(false);
                 router.push("/");
             })
             .catch((error) => {
+                setIsLoading(false);
                 setErrorMessage("Failed to login!\nTry again.");
             });
     };
 
     const signOut = () => {
-        console.log("LOGOUT");
         setUser({});
         destroyCookie(null, "jwt");
         destroyCookie(null, "user");
@@ -57,6 +59,7 @@ export function AuthProvider(props) {
         isLogout,
         setIsLogout,
         errorMessage,
+        isLoading,
     };
 
     return (

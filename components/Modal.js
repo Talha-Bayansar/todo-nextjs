@@ -34,17 +34,17 @@ const Modal = () => {
     };
 
     return (
-        <div className="flex items-center justify-center fixed top-0 left-0 h-screen w-screen z-20 shadow-md">
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex items-center justify-center fixed top-0 left-0 h-screen w-screen z-20 shadow-md"
+        >
             <div
                 onClick={() => setIsDelete(false)}
                 className="w-full h-full bg-black opacity-50"
             />
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ scaleX: 0 }}
-                className="absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md max-w-50"
-            >
+            <div className="absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md max-w-50">
                 <div className="block mb-2">
                     Ben je zeker dat je deze taak wilt verwijderen?
                 </div>
@@ -64,8 +64,8 @@ const Modal = () => {
                         Delete
                     </motion.button>
                 </div>
-            </motion.div>
-        </div>
+            </div>
+        </motion.div>
     );
 };
 

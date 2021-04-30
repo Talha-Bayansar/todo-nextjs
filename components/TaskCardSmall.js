@@ -37,16 +37,9 @@ const TaskCardSmall = ({ task }) => {
 
     return (
         <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.5 } }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => {
-                setSelectedTask(task);
-                setIsSelectedTask(true);
-            }}
+            whileTap={{ scale: 0.8 }}
             className={`flex flex-col rounded-xl bg-gray-100 my-4 mx-2 md:m-6 max-w-card p-4 shadow-mat ${
-                checked && "opacity-50"
+                checked && "bg-gray-300"
             }`}
         >
             <div className="flex justify-between flex-grow">
@@ -54,13 +47,16 @@ const TaskCardSmall = ({ task }) => {
                     className={`text-base select-none text-gray-700 font-semibold ${
                         checked && "line-through"
                     }`}
+                    onClick={() => {
+                        setSelectedTask(task);
+                        setIsSelectedTask(true);
+                    }}
                 >
                     {task.title}
                 </h1>
 
-                <div className="flex flex-col w-min ml-2 justify-start">
-                    <motion.button
-                        whileTap={{ scale: 0.9 }}
+                <div className="block w-min ml-2">
+                    <button
                         onClick={() => {
                             setChecked(!checked);
                             checkTodo(!checked);
@@ -68,11 +64,17 @@ const TaskCardSmall = ({ task }) => {
                         className="focus:outline-none outline-none block rounded-full bg-blue-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-1"
                     >
                         <CheckIcon />
-                    </motion.button>
+                    </button>
                 </div>
             </div>
 
-            <span className="block text-gray-500 text-xs mt-2 select-none">
+            <span
+                className="block text-gray-500 text-xs mt-2 select-none"
+                onClick={() => {
+                    setSelectedTask(task);
+                    setIsSelectedTask(true);
+                }}
+            >
                 {moment(task.date).locale("nl-be").format("dddd DD/MM/YYYY") +
                     ", " +
                     moment(task.date + " " + task.time)

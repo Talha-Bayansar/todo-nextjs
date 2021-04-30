@@ -65,7 +65,13 @@ export const EditTask = ({ setEdit }) => {
         setEdit(false);
     };
     return (
-        <div className="flex items-center justify-center fixed top-0 left-0 h-screen w-screen z-20 shadow-md">
+        <motion.div
+            initial="hidden"
+            animate="visible"
+            exit="removed"
+            variants={formVar}
+            className="flex items-center justify-center fixed top-0 left-0 h-screen w-screen z-20 shadow-md"
+        >
             <div
                 onClick={() => {
                     setTaskToEdit({});
@@ -73,11 +79,7 @@ export const EditTask = ({ setEdit }) => {
                 }}
                 className="w-full h-full bg-black opacity-50"
             />
-            <motion.form
-                initial="hidden"
-                animate="visible"
-                exit="removed"
-                variants={formVar}
+            <form
                 autoComplete="off"
                 onSubmit={(e) => handleSubmit(e)}
                 className="absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
@@ -136,7 +138,7 @@ export const EditTask = ({ setEdit }) => {
                 >
                     Taak aanmaken
                 </motion.button>
-            </motion.form>
-        </div>
+            </form>
+        </motion.div>
     );
 };

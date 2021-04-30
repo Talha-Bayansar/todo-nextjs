@@ -19,21 +19,20 @@ const TaskCardDetails = () => {
     };
 
     return (
-        <div className="flex items-center justify-center fixed top-0 left-0 h-screen w-screen z-20 shadow-md">
+        <motion.div
+            initial="hidden"
+            animate="visible"
+            exit="removed"
+            variants={divVar}
+            className="flex items-center justify-center fixed top-0 left-0 h-screen w-screen z-20 shadow-md"
+        >
             <div
                 onClick={() => {
                     setIsSelectedTask(false);
-                    setSelectedTask({});
                 }}
                 className="w-full h-full bg-black opacity-50"
             />
-            <motion.div
-                initial="hidden"
-                animate="visible"
-                exit="removed"
-                variants={divVar}
-                className="absolute max-w-50 max-h-80screen shadow-mat flex flex-col bg-gray-200 p-4 rounded-md"
-            >
+            <div className="absolute max-w-50 max-h-80screen shadow-mat flex flex-col bg-gray-200 p-4 rounded-md">
                 <div className="flex flex-col my-2">
                     <label htmlFor="title">Titel</label>
                     <div className="rounded-md p-2 shadow-md bg-white">
@@ -56,8 +55,8 @@ const TaskCardDetails = () => {
                             .locale("nl-be")
                             .format("LT")}
                 </span>
-            </motion.div>
-        </div>
+            </div>
+        </motion.div>
     );
 };
 

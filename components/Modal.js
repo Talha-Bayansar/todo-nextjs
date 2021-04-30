@@ -40,8 +40,8 @@ const Modal = () => {
                 className="w-full h-full bg-black opacity-50"
             />
             <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 exit={{ scaleX: 0 }}
                 className="absolute shadow-mat flex flex-col bg-gray-200 p-4 rounded-md max-w-50"
             >

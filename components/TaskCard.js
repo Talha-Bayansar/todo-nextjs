@@ -38,7 +38,7 @@ export const TaskCard = ({ task, setEdit }) => {
         <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            exit={{ opacity: 0, scale: 0.3 }}
+            exit={{ opacity: 0, transition: { duration: 0.5 } }}
             className={`flex rounded-xl bg-gray-100 my-4 md:m-6 max-w-sm p-4 shadow-mat ${
                 checked && "opacity-50"
             }`}

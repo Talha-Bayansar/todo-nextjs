@@ -23,15 +23,13 @@ export const EditTask = ({ setEdit }) => {
 
     const formVar = {
         hidden: {
-            scale: 0,
             opacity: 0,
         },
         visible: {
-            scale: 1,
             opacity: 1,
         },
         removed: {
-            scaleX: 0,
+            opacity: 0,
         },
     };
 

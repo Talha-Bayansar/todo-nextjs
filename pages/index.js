@@ -7,6 +7,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Loader from "react-loader-spinner";
+import TaskCardSmall from "../components/TaskCardSmall";
+import { useTask } from "../contexts/useTask";
+import TaskCardDetails from "../components/TaskCardDetails";
 
 export default function Home() {
     const jwt = parseCookies().jwt;
@@ -15,6 +18,7 @@ export default function Home() {
     const router = useRouter();
     const [data, setData] = useState();
     const [error, setError] = useState();
+    const { isSelectedTask } = useTask();
 
     const variants = {
         hidden: { opacity: 0 },
@@ -73,7 +77,7 @@ export default function Home() {
                 <AnimatePresence initial={false}>
                     {data.length > 0 ? (
                         data.map((task) => (
-                            <TaskCard key={task.id} task={task} />
+                            <TaskCardSmall key={task.id} task={task} />
                         ))
                     ) : (
                         <p className="block text-center">
@@ -83,6 +87,7 @@ export default function Home() {
                             of geniet van je dag.
                         </p>
                     )}
+                    {isSelectedTask && <TaskCardDetails />}
                 </AnimatePresence>
             </div>
         </motion.div>

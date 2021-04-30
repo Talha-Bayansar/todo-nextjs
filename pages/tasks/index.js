@@ -79,7 +79,7 @@ const Tasks = () => {
             >
                 <Add />
             </motion.button>
-            <div className="flex flex-wrap justify-center mt-5">
+            <div className="flex flex-wrap justify-center mt-5 px-8">
                 <AnimatePresence initial={false}>
                     {data.length > 0 ? (
                         data.map((task) => (

@@ -31,5 +31,13 @@ a {
         .max-w-50 {
             max-width: 80vw;
         }
+
+        .max-h-80screen {
+            max-height: 80vh;
+        }
+
+        .max-w-card {
+            max-width: 10rem;
+        }
     }
 }

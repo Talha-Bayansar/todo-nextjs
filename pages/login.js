@@ -53,7 +53,7 @@ const Login = () => {
                         <p className="block text-red-600">{errorMessage}</p>
                     )}
                     {isLoading && (
-                        <div className="flex justify-center">
+                        <div className="flex justify-center mt-4">
                             <Loader
                                 type="TailSpin"
                                 color="#00BFFF"

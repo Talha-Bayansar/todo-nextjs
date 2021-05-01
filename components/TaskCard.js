@@ -53,7 +53,7 @@ export const TaskCard = ({ task, setEdit }) => {
                     } whitespace-pre-line my-3`}
                 >
                     <ReactReadMoreReadLess
-                        charLimit={150}
+                        charLimit={120}
                         readMoreText={"Read more"}
                         readLessText={"Read less"}
                         readMoreClassName="text-blue-800"

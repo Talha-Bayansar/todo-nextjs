@@ -1,5 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
 * {
     -webkit-tap-highlight-color: transparent;
+    font-family: "Balsamiq Sans", cursive;
 }
 
 /* background-image: linear-gradient(to top, #b84de7, #9762ee, #7670f0, #547bec, #3682e3); */
@@ -8,8 +11,7 @@ html,
 body {
     padding: 0;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-family: "Balsamiq Sans", cursive;
     overscroll-behavior-y: contain;
 }
 

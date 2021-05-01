@@ -136,7 +136,7 @@ export const EditTask = ({ setEdit }) => {
                     type="submit"
                     className="focus:outline-none shadow-mat outline-none my-2 bg-white rounded-md py-2 hover:bg-green-300 transition-colors"
                 >
-                    Taak aanmaken
+                    Taak wijzigen
                 </motion.button>
             </form>
         </motion.div>

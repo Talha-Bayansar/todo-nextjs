@@ -69,7 +69,9 @@ const Tasks = () => {
             <Head>
                 <title>Taken</title>
             </Head>
-            <h1 className="relative text-5xl">Taken</h1>
+            <h1 className="relative text-4xl border-t-2 border-b-2 w-min py-2 p-6">
+                Taken
+            </h1>
             <motion.button
                 whileTap={{ scale: 0.9 }}
                 onClick={() => {

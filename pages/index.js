@@ -83,6 +83,7 @@ export default function Home() {
                         <p className="block text-center">
                             Je hebt geen taken voor vandaag!
                             <br />
+                            <br />
                             Maak er gebruik van door andere taken af te werken
                             of geniet van je dag.
                         </p>

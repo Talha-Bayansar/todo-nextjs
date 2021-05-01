@@ -41,7 +41,7 @@ const TaskCardDetails = () => {
                 </div>
                 <div className="flex flex-col my-2">
                     <label htmlFor="description">Beschrijving</label>
-                    <div className="overflow-y-scroll rounded-md bg-white p-2 shadow-md">
+                    <div className="overflow-y-scroll rounded-md bg-white p-2 shadow-md max-h-60 sm:max-h-96">
                         {selectedTask.description}
                     </div>
                 </div>

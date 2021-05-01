@@ -40,7 +40,7 @@ export const TaskCard = ({ task, setEdit }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.5 } }}
             className={`flex rounded-xl bg-gray-100 my-4 md:m-6 max-w-sm p-4 shadow-mat ${
-                checked && "opacity-50"
+                checked && "bg-gray-300"
             }`}
         >
             <div className="flex flex-col justify-between flex-grow">

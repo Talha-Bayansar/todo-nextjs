@@ -44,7 +44,7 @@ const TaskCardSmall = ({ task }) => {
         >
             <div className="flex justify-between flex-grow">
                 <h1
-                    className={`text-base select-none text-gray-700 font-semibold ${
+                    className={`text-base select-none overflow-hidden text-gray-700 font-semibold ${
                         checked && "line-through"
                     }`}
                     onClick={() => {

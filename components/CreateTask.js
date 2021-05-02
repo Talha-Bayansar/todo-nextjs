@@ -84,6 +84,7 @@ export const CreateTask = ({ setIsVisible }) => {
                         className="focus:outline-none rounded-md p-2 shadow-md"
                         type="text"
                         name="title"
+                        maxLength={30}
                         onChange={(e) => setTitle(e.target.value)}
                         value={title}
                     />

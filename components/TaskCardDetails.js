@@ -35,13 +35,13 @@ const TaskCardDetails = () => {
             <div className="absolute max-w-50 max-h-80screen shadow-mat flex flex-col bg-gray-200 p-4 rounded-md">
                 <div className="flex flex-col my-2">
                     <label htmlFor="title">Titel</label>
-                    <div className="rounded-md p-2 shadow-md bg-white">
+                    <div className="rounded-md p-2 shadow-md bg-white overflow-scroll">
                         {selectedTask.title}
                     </div>
                 </div>
                 <div className="flex flex-col my-2">
                     <label htmlFor="description">Beschrijving</label>
-                    <div className="overflow-y-scroll rounded-md bg-white p-2 shadow-md max-h-60 sm:max-h-96">
+                    <div className="overflow-scroll rounded-md bg-white p-2 shadow-md max-h-60 sm:max-h-96">
                         {selectedTask.description}
                     </div>
                 </div>

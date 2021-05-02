@@ -39,11 +39,11 @@ export const TaskCard = ({ task, setEdit }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.5 } }}
-            className={`flex rounded-xl bg-gray-100 my-4 md:m-6 max-w-sm p-4 shadow-mat ${
+            className={`flex rounded-xl bg-gray-100 my-4 md:m-6 sm:max-w-sm max-w-50 p-4 shadow-mat ${
                 checked && "bg-gray-300"
             }`}
         >
-            <div className="flex flex-col justify-between flex-grow">
+            <div className="flex flex-col justify-between flex-grow overflow-x-hidden">
                 <h1 className={`text-2xl ${checked && "line-through"}`}>
                     {task.title}
                 </h1>

@@ -68,7 +68,7 @@ export default function Home() {
             className="flex flex-col items-center"
         >
             <Head>
-                <title>StartPagina</title>
+                <title>Start</title>
             </Head>
             <h1 className="text-4xl border-t-2 border-b-2 w-min py-2 p-6">
                 Vandaag

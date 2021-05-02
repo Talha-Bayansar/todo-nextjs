@@ -15,13 +15,13 @@ const Login = () => {
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <Head>
-                <title>Login</title>
+                <title>Aanmelden</title>
             </Head>
             <div className="flex flex-col items-center justify-center w-full mt-20">
-                <h1 className="text-5xl mb-10">Login</h1>
+                <h1 className="text-5xl mb-10">Welkom gebruiker!</h1>
                 <form onSubmit={handleSubmit} className="flex flex-col w-min">
                     <div className="flex flex-col my-2">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">E-mailadres</label>
                         <input
                             className="bg-gray-200 rounded-md px-2 py-2 focus:outline-none shadow-mat"
                             type="text"
@@ -31,7 +31,7 @@ const Login = () => {
                         />
                     </div>
                     <div className="flex flex-col my-2">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">Wachtwoord</label>
                         <input
                             className="bg-gray-200 rounded-md px-2 py-2 focus:outline-none shadow-mat"
                             type="password"
@@ -47,7 +47,7 @@ const Login = () => {
                         type="submit"
                         className="bg-gray-400 mt-4 rounded-md py-2 text-white font-bold shadow-mat focus:outline-none active:shadow-none hover:shadow-none"
                     >
-                        Login
+                        Aanmelden
                     </motion.button>
                     {errorMessage && (
                         <p className="block text-red-600">{errorMessage}</p>

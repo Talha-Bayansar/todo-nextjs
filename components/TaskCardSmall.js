@@ -75,11 +75,9 @@ const TaskCardSmall = ({ task }) => {
                     setIsSelectedTask(true);
                 }}
             >
-                {moment(task.date).locale("nl-be").format("dddd DD/MM/YYYY") +
-                    ", " +
-                    moment(task.date + " " + task.time)
-                        .locale("nl-be")
-                        .format("LT")}
+                {moment(task.date + " " + task.time)
+                    .locale("nl-be")
+                    .format("LT")}
             </span>
         </motion.div>
     );

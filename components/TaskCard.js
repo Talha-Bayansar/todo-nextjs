@@ -1,39 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
-import CheckIcon from "@material-ui/icons/Check";
 import EditIcon from "@material-ui/icons/Edit";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import moment from "moment";
 import { useTask } from "../contexts/useTask";
-import axios from "axios";
-import { parseCookies } from "nookies";
-import { mutate } from "swr";
 import { motion } from "framer-motion";
 
 export const TaskCard = ({ task, setEdit }) => {
     const { setTaskToEdit, setIsDelete, setTaskToDelete } = useTask();
-    const [checked, setChecked] = useState(task.isChecked);
+    const [checked] = useState(task.isChecked);
 
-    const checkTodo = async (value) => {
-        const jwt = parseCookies().jwt;
-        const userId = parseCookies().userId;
-
-        await axios.put(
-            `${process.env.NEXT_PUBLIC_API_URL}/tasks/${task.id}`,
-            {
-                isChecked: value,
-            },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${jwt}`,
-                },
-            }
-        );
-        mutate(
-            `${process.env.NEXT_PUBLIC_API_URL}/tasks?uid_eq=${userId}&_sort=date:ASC,time:ASC`
-        );
-    };
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -77,38 +53,24 @@ export const TaskCard = ({ task, setEdit }) => {
                 <motion.button
                     whileTap={{ scale: 0.9 }}
                     onClick={() => {
-                        setChecked(!checked);
-                        checkTodo(!checked);
+                        setTaskToEdit(task);
+                        setEdit(true);
                     }}
-                    className="focus:outline-none my-1 outline-none block rounded-full bg-blue-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
+                    className="focus:outline-none my-1 outline-none block rounded-full bg-yellow-600 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
                 >
-                    <CheckIcon />
+                    <EditIcon />
                 </motion.button>
-                {setEdit && (
-                    <>
-                        <motion.button
-                            whileTap={{ scale: 0.9 }}
-                            onClick={() => {
-                                setTaskToEdit(task);
-                                setEdit(true);
-                            }}
-                            className="focus:outline-none my-1 outline-none block rounded-full bg-yellow-600 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
-                        >
-                            <EditIcon />
-                        </motion.button>
-                        <motion.button
-                            whileTap={{ scale: 0.9 }}
-                            onClick={() => {
-                                setTaskToDelete(task);
-                                setIsDelete(true);
-                                console.log("isDelete true");
-                            }}
-                            className="focus:outline-none my-1 outline-none block rounded-full bg-red-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
-                        >
-                            <DeleteIcon />
-                        </motion.button>
-                    </>
-                )}
+                <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => {
+                        setTaskToDelete(task);
+                        setIsDelete(true);
+                        console.log("isDelete true");
+                    }}
+                    className="focus:outline-none my-1 outline-none block rounded-full bg-red-500 text-gray-100 shadow-mat active:shadow-inner hover:shadow-inner p-2"
+                >
+                    <DeleteIcon />
+                </motion.button>
             </div>
         </motion.div>
     );

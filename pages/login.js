@@ -18,7 +18,9 @@ const Login = () => {
                 <title>Aanmelden</title>
             </Head>
             <div className="flex flex-col items-center justify-center w-full mt-20">
-                <h1 className="text-5xl mb-10">Welkom gebruiker!</h1>
+                <h1 className="text-5xl mb-10 text-center">
+                    Welkom gebruiker!
+                </h1>
                 <form onSubmit={handleSubmit} className="flex flex-col w-min">
                     <div className="flex flex-col my-2">
                         <label htmlFor="email">E-mailadres</label>
